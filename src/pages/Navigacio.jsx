@@ -42,6 +42,11 @@ export default function Navigacio() {
               Statisztika
             </Link>
           </li>
+          <li className="navbar-item">
+          <Link className="nav-link" to="/regisztracio">
+                 Adatmódosítás
+          </Link>
+          </li>
         </>
       );
     } else if (user.role === 2) {
@@ -53,6 +58,12 @@ export default function Navigacio() {
               Statisztika
             </Link>
           </li>
+          <li className="navbar-item">
+          <Link className="nav-link" to="/regisztracio">
+                 Adatmódosítás
+          </Link>
+          </li>
+     
         </>
       );
     }
@@ -62,7 +73,7 @@ export default function Navigacio() {
     <nav className="navbar navbar-expand-sm bg-light">
       <div className="container-fluid">
         <ul className="navbar-nav">
-          <li className="navbar-item">
+        <li className="navbar-item">
             <Link className="nav-link" to="/">
               Kezdőlap
             </Link>

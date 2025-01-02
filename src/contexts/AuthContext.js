@@ -22,12 +22,15 @@ export const AuthProvider = ({ children }) => {
     console.log(data)
     setUser(data);
   };
+
+ 
   const logout = async () => {
     await csrf();
 
     myAxios.post("/logout").then((resp) => {
       setUser(null);
       console.log(resp);
+      navigate("/");
     });
   };
 

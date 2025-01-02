@@ -1,11 +1,11 @@
 import { Route, Routes } from "react-router-dom";
-import Kezdolap from "./pages/Kezdolap";
-import Bejelentkezes from "./pages/Bejelentkezes";
-import Regisztracio from "./pages/Regisztracio";
+import Kezdolap from "./pages/Kezdolap.jsx";
+import Bejelentkezes from "./pages/Bejelentkezes.jsx";
+import Regisztracio from "./pages/User.jsx";
 import VendegLayout from "./layouts/VendegLayout";
-import Statistics from "./pages/Statistics";
-import Dokuments from "./pages/Dokuments";
-import Admin from "./pages/Admin";
+import Statistics from "./pages/Statistics.jsx";
+import Dokuments from "./pages/Dokuments.jsx";
+import Admin from "./pages/Admin.jsx";
 import { AuthProvider } from "./contexts/AuthContext";
 import { BrowserRouter } from "react-router-dom";
 import { ValidationProvider } from "./contexts/ValidationContext";

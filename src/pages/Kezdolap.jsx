@@ -7,7 +7,7 @@ export default function Kezdolap() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user == null) {
+    if (user === null) {
       getUser();  // Ha nincs bejelentkezett felhasználó, próbáljuk meg lekérni
     }
   }, [user, getUser]);

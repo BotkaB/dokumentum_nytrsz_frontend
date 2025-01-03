@@ -1,23 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import useAuthContext from "../contexts/AuthContext"; 
+import { Navigate } from "react-router-dom";  
 
-export default function Dokuments() {
+export default function Admin() {
   const { user } = useAuthContext(); 
-
-  useEffect(() => {
-    if (user) {
-      if (user.role === 0) {
-        
-      } else {
-        alert("Nincs jogosultságod ehhez az oldalhoz!");
-      }
+ 
+  console.log(user)
+    // Ha a felhasználónak nincs jogosultsága, irányítsuk át a kezdőlapra
+    if (user && user.role !== 0) {
+      return <Navigate to="/" replace />;
     }
-  }, [user]);
-
   
+    // Ha jogosultsága van, megjelenítjük a dokumentumokat
+    if (user && user.role === 0) { 
   return (
     <div>
       <h1>Admin</h1>
     </div>
   );
+}
 }

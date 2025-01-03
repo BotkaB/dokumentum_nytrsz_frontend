@@ -1,17 +1,13 @@
-import React, { useEffect } from "react";
+import React from "react";
 import useAuthContext from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 export default function Kezdolap() {
-  const { user, getUser } = useAuthContext(); 
+  const { user} = useAuthContext(); 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (user === null) {
-      getUser();  // Ha nincs bejelentkezett felhasználó, próbáljuk meg lekérni
-    }
-  }, [user, getUser]);
 
+/*
   const navigateToRolePage = (role) => {
     // Navigálás a megfelelő szerepkör oldalra
     if (role === 0) {
@@ -22,7 +18,7 @@ export default function Kezdolap() {
       navigate("/statistics");
     }
   };
-
+*/
   return (
     <div>
      

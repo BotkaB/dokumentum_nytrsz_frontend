@@ -5,6 +5,8 @@ import useValidationContext from "../contexts/ValidationContext";
 export default function User() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [id, setId] = useState("");
+  const [role, setRole] = useState("");
   const [password, setPassword] = useState("");
   const [password_confirmation, setPasswordConfirmation] = useState("");
   const [submitted, setSubmitted] = useState(false);
@@ -18,6 +20,8 @@ export default function User() {
     if (user) {
       setName(user.name || "");
       setEmail(user.email || "");
+      setId(user.id || "");
+      setRole(user.role || 1);
     }
   }, [user]);
 
@@ -32,6 +36,7 @@ export default function User() {
       email,
       password,
       password_confirmation,
+      role,
     };
 
     // Validáció
@@ -39,7 +44,7 @@ export default function User() {
 
     if (Object.keys(validation).length === 0) {
       // Ha a felhasználó be van jelentkezve, akkor frissítjük az adatokat
-      const vegpont = user ? "/user/update" : "/register";
+      const vegpont = user ? `/api/user/update/${id}` : "/register";
       loginReg(adat, vegpont);
     } else {
       setErrors(validation); // Ha hibák vannak, akkor beállítjuk őket

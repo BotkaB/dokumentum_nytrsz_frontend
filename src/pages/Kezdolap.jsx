@@ -25,8 +25,8 @@ export default function Kezdolap() {
       {user ? (
         <>
           <p>Kedves: {user.name}</p>
-          <p>Jogosultságod: {user.role === 0 ? "Admin" : user.role === 1 ? "Dokumentumellenőrző" : "Statisztikai lekérdező"}</p>
-        
+          <p>Jogosultságod: {user.role === 0 ? "Admin" : user.role === 1 ? "Dokumentumellenőrző" : user.role === 2 ? "Statisztikai lekérdező" : "Nincs érvényes jogosultság!"}</p>
+
         </>
       ) : (
         <p>Kedves Látogató!</p>

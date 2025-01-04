@@ -2,6 +2,7 @@ import React from "react";
 import useAuthContext from "../contexts/AuthContext"; 
 import { Navigate } from "react-router-dom";  
 
+
 export default function Admin() {
   const { user } = useAuthContext(); 
  
@@ -14,7 +15,7 @@ export default function Admin() {
     // Ha jogosultsága van, megjelenítjük a dokumentumokat
     if (user && user.role === 0) { 
   return (
-    <div>
+    <div>   
       <h1>Admin</h1>
     </div>
   );

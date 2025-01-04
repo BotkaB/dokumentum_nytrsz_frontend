@@ -5,8 +5,7 @@ import { Outlet } from "react-router-dom";
 export default function VendegLayout() {
     return (
         <>
-          <Navigacio />
-       
+        <Navigacio />
         <Outlet />
         </>
     );

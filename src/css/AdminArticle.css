@@ -1,0 +1,62 @@
+.admin-article {
+    display: block;
+  }
+  
+  .table-responsive,
+  .admin-table {
+    max-width: 100%;
+  }
+  
+  .admin-table {
+    font-size: 0.8rem;
+  }
+  
+  .admin-table td {
+    vertical-align: middle;
+  }
+  
+  .admin-table input {
+    margin: 0;
+    padding: 5px;
+    box-shadow: none;
+    width: auto;
+  }
+  
+  .admin-table select {
+    box-shadow: none;
+    padding: 7px;
+  }
+  
+  .admin-form input[type=submit] {
+    width: auto;
+  }
+  
+  .admin-form select {
+    min-width: 100%;
+  }
+  
+  .admin-table select {
+    min-width: 100%;
+  }
+  
+  .admin-table select:disabled {
+    border: 0;
+    background: none;
+  }
+  
+  .admin-table input:read-only {
+    background-color: transparent;
+    border: 0;
+  }
+  
+  .card-body a {
+    border-color: darkblue;
+    color: darkblue;
+    text-shadow: none;
+  }
+  
+  .card-body a:hover {
+    border-color: #0101c9;
+    color: #0101c9;
+    background-color: rgba(199, 210, 224, 0.87);
+  }

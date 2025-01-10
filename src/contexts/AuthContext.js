@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
 
   //bejelentkezett felhasználó adatainak lekérdezése
   const getUser = async () => {
-    const { data } = await myAxios.get("/api/user");
+    const { data } = await myAxios.get("api/user");
     console.log(data)
     setUser(data);
   };

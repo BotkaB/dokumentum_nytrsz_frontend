@@ -3,7 +3,7 @@ const lista = [
       users: {
         elnevezes: "Felhasználók",
         apik: {
-          indexUrl: "users",
+          indexUrl: "api/admin/users",
           showUrl: "api/users",
           storeUrl: "api/users",
           updateUrl: "api/users",

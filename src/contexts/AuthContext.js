@@ -2,6 +2,7 @@ import { createContext, useContext, useState, useEffect } from "react";
 import { myAxios } from "../api/axios";
 import { useNavigate } from "react-router-dom";
 
+
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -12,7 +13,7 @@ export const AuthProvider = ({ children }) => {
     email: "",
     password: "",
     password_confirmation: "",
-    role:""
+    role: ""
   });
   const csrf = () => myAxios.get("/sanctum/csrf-cookie");
 
@@ -25,25 +26,30 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     if (user === null) {
-      getUser(); 
+      getUser();
     }
   }, []);
 
- 
+
   const logout = async () => {
     await csrf();
 
     myAxios.post("api/logout").then((resp) => {
-      setUser(null);
-      console.log(resp);
-      navigate("/");
+      if (user.role > 2) {
+        setUser(null);
+        console.log(resp);
+      } else {
+        setUser(null);
+        console.log(resp);
+        navigate("/");
+      }
     });
   };
 
   const loginReg = async ({ ...adat }, vegpont) => {
     //lekérjük a csrf tokent
     await csrf();
-    console.log(adat,vegpont);
+    console.log(adat, vegpont);
 
     try {
       await myAxios.post(vegpont, adat);
@@ -52,10 +58,16 @@ export const AuthProvider = ({ children }) => {
       //Lekérdezzük a usert
       //await getUser();
       //elmegyünk  a kezdőlapra
-      getUser()
-      navigate("/");
+      getUser();
+      console.log(user)
+      if (user.role > 2) {
+        navigate("/nincsjogosultsag");
+        logout();
+      } else {
+        navigate("/");
+      }
       setErrors({})
-      
+
     } catch (error) {
       console.log(error);
       if (error.response.status === 422) {

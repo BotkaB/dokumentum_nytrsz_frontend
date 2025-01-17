@@ -52,6 +52,7 @@ function Navigacio() {
                         {user ? (
                             <>
                                 {getRoleBasedLinks()}
+                                
                                 <Nav.Link as={Link} to="/regisztracio">Adatmódosítás</Nav.Link>
                                 <Nav.Link as={Link} to="/" onClick={logout}>Kijelentkezés</Nav.Link>
                             </>

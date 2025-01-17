@@ -1,13 +1,23 @@
 import React from "react";
 import useAuthContext from "../contexts/AuthContext";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 export default function Kezdolap() {
   const { user} = useAuthContext(); 
 
   return (
-    <div>
+    <div className="container-fluid" style={{
+      backgroundImage: 'url("/Kezdooldal_hatterkep.jpg")',
+      backgroundSize: 'cover',
+      backgroundRepeat: 'no-repeat',
+      backgroundPosition: 'center center',
+      height: '100vh',
+      margin: 0
+  }}>
+      
      
+      
       {user ? (
         <>
           <p>Kedves: {user.name}</p>
@@ -20,3 +30,4 @@ export default function Kezdolap() {
     </div>
   );
 }
+

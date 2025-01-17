@@ -3,11 +3,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function Header() {
   return (
-    <header style={headerStyle}>
-      <style>{keyframes}</style>
+    <header className="container-fluid" style={headerStyle}>
+      <style>{`${keyframes} ${responsiveStyles}`}</style>
       <h1 style={h1Style}>Dokumentum Nyilvántartó Rendszer</h1>
       <div className="scroll-text" style={scrollTextStyle}>
-        <p style={pStyle}>eredetimásolataintézeti_adatszolgáltatás-novemer.korr(2).xls</p>
+        <p style={pStyle}>eredetimásolataintézeti_adatszolgáltatás-november.korr(2).xls</p>
       </div>
     </header>
   );
@@ -16,11 +16,11 @@ export default function Header() {
 const headerStyle = {
   position: 'relative',
   overflow: 'hidden',
-  background: '#e0e0e0', // Világos szürke háttérszín
+  background: '#e0e0e0',
   padding: '20px',
   width: '100%',
   boxSizing: 'border-box',
-  height: '150px' // Növeljük, hogy elférjen a cím és a futó szöveg is
+  height: '140px'
 };
 
 const scrollTextStyle = {
@@ -31,18 +31,18 @@ const scrollTextStyle = {
   overflow: 'hidden',
   display: 'flex',
   alignItems: 'center',
-  top: '2rem' // Finomítjuk a helyzetét
+  top: '2rem'
 };
 
 const pStyle = {
   display: 'inline-block',
   fontSize: 'calc(0.8rem + 0.4vw)',
-  animation: 'marquee 10s linear infinite',
-  position: 'relative' // Relatív helyezés az animációhoz
+  animation: 'marquee 20s linear infinite', 
+  position: 'relative'
 };
 
 const h1Style = {
-  fontSize: 'calc(1.5rem + 1vw)', // Reszponzívan csökkenő betűméret
+  fontSize: 'calc(1.5rem + 1vw)',
   fontFamily: "'Courier New', monospace",
   fontWeight: 'bold',
   textAlign: 'center',
@@ -50,22 +50,22 @@ const h1Style = {
 
 const keyframes = `
   @keyframes marquee {
-    0% { transform: translateX(100%); } // Jobb szélről indul
-    100% { transform: translateX(-100%); } // Balra mozog
+    0% { transform: translateX(250%); }  
+    100% { transform: translateX(-150%); } 
   }
 `;
 
 const responsiveStyles = `
   @media (max-width: 768px) {
     .scroll-text p {
-      animation-duration: 20s;
+      animation-duration: 25s;
       font-size: calc(0.7rem + 0.4vw);
     }
   }
 
   @media (max-width: 480px) {
     .scroll-text p {
-      animation-duration: 30s;
+      animation-duration: 35s;
       font-size: calc(0.6rem + 0.3vw);
     }
     h1 {

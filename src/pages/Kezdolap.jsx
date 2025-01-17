@@ -30,12 +30,11 @@ const articleStyle = {
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'flex-start',
-  paddingTop: '30vh' // Kicsit fentebb hozva a p tageket az article egyharmadánál
+  paddingTop: '25.8vh'
 };
 
 const pStyle = {
-  margin: '0 0 1rem 0', // Például szép stílusok
-  fontSize: '1.2rem'
+  margin: '0 0 0.5rem 0',
+  paddingLeft: '0.6rem', 
+  fontSize: '1.1rem'
 };
-
-

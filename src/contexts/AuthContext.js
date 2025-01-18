@@ -34,7 +34,7 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     await csrf();
 
-    myAxios.post("api/logout").then((resp) => {
+    myAxios.post("/logout").then((resp) => {
       if (user.role > 2) {
         setUser(null);
         console.log(resp);
@@ -43,6 +43,7 @@ export const AuthProvider = ({ children }) => {
         console.log(resp);
         navigate("/");
       }
+    
     });
   };
 

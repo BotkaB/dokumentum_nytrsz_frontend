@@ -21,7 +21,7 @@ export default function User() {
       setName(user.name || "");
       setEmail(user.email || "");
       setId(user.id || "");
-      setRole(user.role || 1);
+      setRole(user.role || "");
     }
   }, [user]);
 
@@ -32,11 +32,11 @@ export default function User() {
 
     // Űrlapadatok összegyűjtése
     const adat = {
-      name,
-      email,
-      password,
-      password_confirmation,
-      role,
+      name:name,
+      email:email,
+      password:password,
+      password_confirmation:password_confirmation,
+      role:role,
     };
 
     // Validáció

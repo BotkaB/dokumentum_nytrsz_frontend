@@ -1,21 +1,30 @@
 import React from "react";
 import useAuthContext from "../contexts/AuthContext";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useNavigate } from "react-router-dom";
 
 
 export default function Kezdolap() {
-  const { user } = useAuthContext(); 
+  const { user, logout } = useAuthContext(); 
+  const navigate = useNavigate()
+
 
   return (
     <article className="container-fluid" style={articleStyle}>
-      {user ? (
+     
+      {user?(  user.role<=2 ? (
         <>
           <p style={pStyle}>Kedves: {user.name}</p>
+         
           <p style={pStyle}>Jogosultságod: {user.role === 0 ? "Admin" : user.role === 1 ? "Dokumentumellenőrző" : user.role === 2 ? "Statisztikai lekérdező" : "Ismeretlen szerep"}</p>
         </>
       ) : (
-        <p style={pStyle}>Kedves Látogató!</p>
-      )}
+     
+          navigate("/nincsjogosultsag")
+         
+        
+     
+      )  ):(<>Kedves Felhasználó!</>)}
     </article>
   );
 }

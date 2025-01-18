@@ -59,13 +59,11 @@ export const AuthProvider = ({ children }) => {
       //await getUser();
       //elmegyünk  a kezdőlapra
       getUser();
+
       console.log(user)
-      if (user.role > 2) {
-        navigate("/nincsjogosultsag");
-        logout();
-      } else {
+     
         navigate("/");
-      }
+     
       setErrors({})
 
     } catch (error) {
@@ -74,7 +72,10 @@ export const AuthProvider = ({ children }) => {
         setErrors(error.response.data.errors);
       }
     }
+
   };
+
+
 
   return (
     <AuthContext.Provider value={{ logout, loginReg, errors, setErrors, getUser, user }}>

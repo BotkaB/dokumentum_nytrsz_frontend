@@ -44,7 +44,8 @@ export default function User() {
 
     if (Object.keys(validation).length === 0) {
       // Ha a felhasználó be van jelentkezve, akkor frissítjük az adatokat
-      const vegpont = user ? `/api/user/update/${id}` : "/register";
+      const vegpont = user ? `/api/user/update/${id}` : "/api/register";
+      console.log(adat)
       loginReg(adat, vegpont);
     } else {
       setErrors(validation); // Ha hibák vannak, akkor beállítjuk őket

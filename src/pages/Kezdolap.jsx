@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 
 export default function Kezdolap() {
-  const { user, logout } = useAuthContext(); 
+  const { user} = useAuthContext(); 
   const navigate = useNavigate()
 
 

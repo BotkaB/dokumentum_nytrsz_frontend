@@ -15,6 +15,7 @@ import { ValidationProvider } from "./contexts/ValidationContext";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import { AdatProvider } from "./contexts/AdatContext.js";
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         <BrowserRouter>
             <ValidationProvider>
                 <AuthProvider>
+                    <AdatProvider>
                <Header/>
                         <Routes>
                             <Route path="/" element={<MainLayout />}>
@@ -43,6 +45,7 @@ function App() {
 
                         </Routes>
                 <Footer/>
+                </AdatProvider>
                 </AuthProvider>
             </ValidationProvider>
         </BrowserRouter>

@@ -1,48 +1,46 @@
-import {myAxios} from "../api/axios";
-import { useState } from "react";
-import { useEffect } from "react";
-import { Container, Table } from "react-bootstrap";
+import React, { useEffect } from "react";
+import { Container } from "react-bootstrap";
 import "../css/adminArticle.css";
 import AdminForm from "./AdminForm";
-import lista from "../data/data";
 import AdminTabla from "./AdminTabla";
+import useAdatContext from "../contexts/AdatContext"; 
 
 export default function AdminArticle(props) {
-  const [objLista, setObjLista] = useState([]);
+  const { objLista, loading, adatlekeres, tabla, valtoztatasTabla } = useAdatContext();
 
-  const tabla = lista[props.tabla];
-
-  const adatlekeres = async () => {
-    const url = tabla.apik.indexUrl;
-    console.log(url)
-    try {
-      const { data } = await myAxios.get(url);
-      setObjLista(data)
-    } catch (error) {
-      console.error(error);
-    }
-
-  };
 
   useEffect(() => {
-    adatlekeres();
-  }, [tabla]);
+    if (props.tabla) {
+      valtoztatasTabla(props.tabla);
+    }
+  }, [props.tabla]);
+
+  useEffect(() => {
+    adatlekeres(); 
+  }, [tabla, adatlekeres]);
+
+
+  const tablaElnevezes = tabla ? tabla.elnevezes : "Nincs adat"; 
 
   return (
     <article className="admin-article">
-      <h2>{tabla.elnevezes}</h2>
+      <h2>{tablaElnevezes}</h2>
       <Container fluid className="admin-container">
-        {objLista.length > 0 && (
+        {loading ? (
+          <p>Töltés...</p>  
+        ) : objLista.length > 0 ? (
           <>
             <AdminForm
-              alapObj={tabla.alapObj}
-              adatok={tabla.adatok}
-              apik={tabla.apik}
+              alapObj={tabla ? tabla.alapObj : null} 
+              adatok={tabla ? tabla.adatok : []} 
+              apik={tabla ? tabla.apik : []} 
               frissites={adatlekeres}
             />
 
-            <AdminTabla adatok={tabla.adatok} objLista={objLista} apik={tabla.apik}/>
+            <AdminTabla adatok={tabla ? tabla.adatok : []} objLista={objLista} apik={tabla ? tabla.apik : []} />
           </>
+        ) : (
+          <p>Nincs adat</p> 
         )}
       </Container>
     </article>

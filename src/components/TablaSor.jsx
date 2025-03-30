@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useRef, useState } from "react";
 import { Button } from "react-bootstrap";
-import {myAxios} from "../api/axios";
+import { myAxios } from "../api/axios";
 import AdminInputText from "./AdminInputText";
 import AdminInputNumber from "./AdminInputNumber";
 import AdminInputDate from "./AdminInputDate";
@@ -129,11 +129,9 @@ export default function TablaSor(props) {
                 {props.adatok[key].tipus === "password" && (
                   <AdminInputPassword
                     name={key}
-                    objektum={objektum[key]}
+                    objektum={sorModosithato ? " " : objektum[key]} // Módosításkor üres
                     esemeny={ertek_modositas}
-                    readOnly={
-                      !(sorModosithato && props.adatok[key].modosithato)
-                    }
+                    readOnly={!sorModosithato}
                   />
                 )}
 

@@ -1,62 +1,84 @@
+/* Az .admin-article osztályú elemeket blokk szintűvé teszi */
 .admin-article {
-    display: block;
-  }
-  
-  .table-responsive,
-  .admin-table {
-    max-width: 100%;
-  }
-  
-  .admin-table {
-    font-size: 0.8rem;
-  }
-  
-  .admin-table td {
-    vertical-align: middle;
-  }
-  
-  .admin-table input {
-    margin: 0;
-    padding: 5px;
-    box-shadow: none;
-    width: auto;
-  }
-  
-  .admin-table select {
-    box-shadow: none;
-    padding: 7px;
-  }
-  
-  .admin-form input[type=submit] {
-    width: auto;
-  }
-  
-  .admin-form select {
-    min-width: 100%;
-  }
-  
-  .admin-table select {
-    min-width: 100%;
-  }
-  
-  .admin-table select:disabled {
-    border: 0;
-    background: none;
-  }
-  
-  .admin-table input:read-only {
-    background-color: transparent;
-    border: 0;
-  }
-  
-  .card-body a {
-    border-color: darkblue;
-    color: darkblue;
-    text-shadow: none;
-  }
-  
-  .card-body a:hover {
-    border-color: #0101c9;
-    color: #0101c9;
-    background-color: rgba(199, 210, 224, 0.87);
-  }
+  display: block;
+}
+
+/* Az .admin-table és .table-responsive osztályú elemek maximális szélessége 100% lesz */
+.table-responsive,
+.admin-table {
+  max-width: 100%;
+}
+
+/* Az admin táblázat betűméretét kisebbre veszi */
+.admin-table {
+  font-size: 0.8rem;
+}
+
+/* A táblázat celláinak tartalmát középre igazítja függőlegesen */
+.admin-table td {
+  vertical-align: middle;
+}
+
+/* Az input mezők alapstílusai */
+.admin-table input {
+  margin: 0;
+  padding: 5px;
+  box-shadow: none;
+  width: auto;
+}
+
+/* A select elemek alapstílusai */
+.admin-table select {
+  box-shadow: none;
+  padding: 7px;
+}
+
+/* Az adminisztrációs űrlap submit gombja automatikusan a tartalomhoz igazodik */
+.admin-form input[type=submit] {
+  width: auto;
+}
+
+/* Az admin-form select elemei most már mindig fekete kerettel jelennek meg */
+.admin-form select,
+.admin-form select:focus,
+.admin-form select:active {
+  min-width: 100%;
+  border: 2px solid black !important; /* Fekete keret mindig látható */
+  padding: 8px; /* Jobb láthatóság érdekében */
+  border-radius: 4px; /* Kerekített sarkok */
+  background-color: white; /* Fehér háttér */
+  color: black; /* Fekete szöveg */
+  background-clip: padding-box;
+}
+
+/* Az admin táblázat select mezői teljes szélességet kapnak */
+.admin-table select {
+  min-width: 100%;
+  border: 2px solid black; /* Fekete keret mindig látható */
+}
+
+/* Ha a select mező disabled állapotban van, akkor eltűnik a határa és háttér */
+.admin-table select:disabled {
+  border: 0;
+  background: none;
+}
+
+/* Az olvasható (read-only) input mezők átlátszó háttérrel és határ nélkül jelennek meg */
+.admin-table input:read-only {
+  background-color: transparent;
+  border: 0;
+}
+
+/* A kártyák (card-body) linkjei sötétkék színűek lesznek */
+.card-body a {
+  border-color: darkblue;
+  color: darkblue;
+  text-shadow: none;
+}
+
+/* Ha az egér a link fölé megy, akkor a színárnyalat megváltozik */
+.card-body a:hover {
+  border-color: #0101c9;
+  color: #0101c9;
+  background-color: rgba(199, 210, 224, 0.87);
+}

@@ -3,7 +3,7 @@ const lista = [
       users: {
         elnevezes: "Felhasználók",
         apik: {
-          indexUrl: "api/admin/users",
+          indexUrl: "api/users",
           showUrl: "api/users",
           storeUrl: "api/users",
           updateUrl: "api/users",
@@ -37,15 +37,16 @@ const lista = [
             fejlec: "e-mail",
             lathato: true,
           },
-          role: {
-            tipus: "text",
-            modosithato: true,
-            kotelezo: true,
-            alapertek: "",
-            regex: "[0-3]{1}",
-            fejlec: "role",
-            lathato: true,
-          },
+         
+            role: {
+              tipus: "text",
+              modosithato: true,
+              kotelezo: true,
+              alapertek: "",
+              regex: "[0-3]{1}",
+              fejlec: "role",
+              lathato: true,
+            },
           email_verified_at: {
             tipus: "text",
             modosithato: false,
@@ -58,12 +59,23 @@ const lista = [
           password: {
             tipus: "password",
             modosithato: true,
-            kotelezo: true,
+            kotelezo: false,
             alapertek: "",
             regex: ".+",
             fejlec: "jelszó",
-            lathato: false,
+            lathato: true,
           },
+
+          password_confirmation: {
+            tipus: "password",
+            modosithato: true,
+            kotelezo: false,
+            alapertek: "",
+            regex: ".+",
+            fejlec: "jelszó megerősítése",
+            lathato: true,
+          },
+
           created_at: {
             tipus: "text",
             modosithato: false,

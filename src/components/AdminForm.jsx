@@ -51,7 +51,7 @@ export default function AdminForm(props) {
   }
 
   return (
-    <form className="admin-form py-3" onSubmit={elkuld} method="post">
+    <form className="admin-form py-3" onSubmit={elkuld} method="post" style={{ backgroundColor: "red" }}>
       <Container
         className="admin-form-wrapper"
         style={{ display: "block", height: "auto" }}

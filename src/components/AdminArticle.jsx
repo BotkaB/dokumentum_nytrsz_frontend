@@ -15,10 +15,10 @@ export default function AdminArticle(props) {
     }
   }, [props.tabla]);
 
-  useEffect(() => {
+/*  useEffect(() => {
     adatlekeres(); 
   }, [tabla, adatlekeres]);
-
+*/
 
   const tablaElnevezes = tabla ? tabla.elnevezes : "Nincs adat"; 
 

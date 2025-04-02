@@ -31,9 +31,9 @@ export const AuthProvider = ({ children }) => {
   };
   
   useEffect(() => {
-    if (user){
+   // if (user){
       getUser();
-    }
+   // }
   }, [ ]);
 
   const logout = async () => {
@@ -73,7 +73,7 @@ useEffect(() => {
 
         console.log("Felhasználó adatai a válaszban:", response.data.user);
       } else {
-        console.log("Nincs felhasználó adat a válaszban.");
+        console.log("Nincs felhasználó adat a válaszban.", response);
         
         // Debug 
         console.log(response.data); // Nézzük meg, mi van a response.data-ban

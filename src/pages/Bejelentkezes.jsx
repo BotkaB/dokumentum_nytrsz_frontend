@@ -30,7 +30,7 @@ export default function Bejelentkezes() {
 
 
     if (Object.keys(validation).length === 0) {
-    loginReg(adat, "/api/login");
+    loginReg(adat, "/login");
     }
   };
 

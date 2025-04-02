@@ -44,7 +44,7 @@ export default function User() {
 
     if (Object.keys(validation).length === 0) {
       // Ha a felhasználó be van jelentkezve, akkor frissítjük az adatokat
-      const vegpont = user ? `/api/user/update/${id}` : "/api/register";
+      const vegpont = user ? `api/user/update` : "/register";
       console.log(adat)
       loginReg(adat, vegpont);
     } else {

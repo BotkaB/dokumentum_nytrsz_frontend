@@ -10,6 +10,7 @@ export default function AdminArticle(props) {
 
 
   useEffect(() => {
+    console.log("Aktív tábla:", props.tabla);
     if (props.tabla) {
       valtoztatasTabla(props.tabla);
     }
@@ -20,7 +21,8 @@ export default function AdminArticle(props) {
   }, [tabla, adatlekeres]);
 */
 
-  const tablaElnevezes = tabla ? tabla.elnevezes : "Nincs adat"; 
+const tablaElnevezes = tabla ? tabla.elnevezes || "Betöltés..." : "Betöltés...";
+
 
   return (
     <article className="admin-article">

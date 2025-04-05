@@ -1,35 +1,38 @@
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { myAxios } from "../api/axios";
 import AdminInputText from "./AdminInputText";
 import AdminInputNumber from "./AdminInputNumber";
 import AdminInputDate from "./AdminInputDate";
-import AdminInputSelect from "./AdminInputSelect";
 import AdminInputEmail from "./AdminInputEmail";
 import AdminInputDateTime from "./AdminInputDateTime";
+import AdminInputSelect from "./AdminInputSelect";
 import AdminInputSelectQuery from "./AdminInputSelectQuery";
-import AdminInputSelectQuerySelf from "./AdminInputSelectQuerySelf";
 import AdminInputPassword from "./AdminInputPassword";
+
+const inputComponentMap = {
+  text: AdminInputText,
+  password: AdminInputPassword,
+  email: AdminInputEmail,
+  number: AdminInputNumber,
+  date: AdminInputDate,
+  datetime: AdminInputDateTime,
+  select: AdminInputSelect,
+  selectQuery: AdminInputSelectQuery,
+};
 
 export default function TablaSor(props) {
   const [sorModosithato, setSorModosithato] = useState(false);
   const [objektum, setObjektum] = useState(props.obj);
   const [regiObjektum, setRegiObjektum] = useState(props.obj);
-  const [lathatosag, SetLathatosag] = useState("");
+  const [lathatosag, setLathatosag] = useState("");
 
   const sorIdGeneralas = () => {
     const kulcsok_lista = props.adatok.elsodleges_kulcs;
-
     if (kulcsok_lista.length > 1) {
-      let kompozit_kulcs = "";
-      let i = 0;
-      while (i < kulcsok_lista.length) {
-        kompozit_kulcs += objektum[kulcsok_lista[i]] + "/";
-        i++;
-      }
+      let kompozit_kulcs = kulcsok_lista.map(kulcs => objektum[kulcs]).join("/");
       return kompozit_kulcs.replace(" ", "%20");
     }
-
     return objektum[kulcsok_lista[0]];
   };
 
@@ -37,181 +40,83 @@ export default function TablaSor(props) {
     setObjektum(props.obj);
     setRegiObjektum(props.obj);
     setSorModosithato(false);
-    SetLathatosag("");
-
-
-    const initCsrf = async () => {
-      try {
-
-        console.log("CSRF token beállítva (TablaSor)");
-      } catch (error) {
-        console.error("CSRF token beállítása sikertelen:", error);
-      }
-    };
-
-    initCsrf();
+    setLathatosag("");
   }, [props]);
 
-  function modosithatova_allitas() {
+  const modosithatova_allitas = () => {
     setRegiObjektum(objektum);
     setSorModosithato(true);
-  }
+  };
 
-  function ertek_modositas(event) {
+  const ertek_modositas = (event) => {
     setObjektum({ ...objektum, [event.target.name]: event.target.value });
-  }
+  };
 
-  async function mentes() {
+  const mentes = async () => {
     const modositottId = sorIdGeneralas();
-    const payload = { ...objektum };
-
-    console.log("Mentésre küldött objektum:", payload);
-
     try {
       await myAxios.put(`${props.apik.updateUrl}/${modositottId}`, objektum);
       setSorModosithato(false);
-      console.log(`${modositottId}. azonosítójú sor módosítva!`, regiObjektum, objektum);
     } catch (error) {
-      if (error.response) {
-        console.error("Mentés sikertelen:", error.response.data);
-      } else {
-        console.error("Mentés sikertelen:", error);
-      }
+      console.error("Mentés sikertelen:", error.response?.data || error);
     }
-  }
+  };
 
-  function megse() {
+  const megse = () => {
     setObjektum(regiObjektum);
     setSorModosithato(false);
-  }
+  };
 
-  async function torles() {
+  const torles = async () => {
     const torlendoId = sorIdGeneralas();
     try {
       await myAxios.delete(`${props.apik.destroyUrl}/${torlendoId}`);
-      SetLathatosag("none");
-      console.log(`${torlendoId} azonosítójú sor törölve!`);
+      setLathatosag("none");
     } catch (error) {
       console.error("Törlés sikertelen:", error);
     }
-  }
-
-
+  };
 
   return (
     <tr style={{ display: lathatosag }}>
-      {Object.keys(objektum).map(function (key, index) {
-        return (
-          <Fragment key={key}>
-            {props.adatok[key] && props.adatok[key].lathato && (
+      {Object.keys(objektum).map((key) => {
+        const adat = props.adatok[key];
+        if (adat && adat.lathato) {
+          const InputComponent = inputComponentMap[adat.tipus];
+          return (
+            <Fragment key={key}>
               <td>
-                {props.adatok[key].tipus === "text" && (
-                  <AdminInputText
-                    name={key}
-                    regex={props.adatok[key].regex}
-                    objektum={objektum[key]}
-                    esemeny={ertek_modositas}
-                    readOnly={!(sorModosithato && props.adatok[key].modosithato)}
-                  />
-                )}
-                {props.adatok[key].tipus === "password" && (
-                  <AdminInputPassword
-                    name={key}
-                    objektum={sorModosithato ? " " : objektum[key]}
-                    esemeny={ertek_modositas}
-                    readOnly={!sorModosithato}
-                  />
-                )}
-                {props.adatok[key].tipus === "email" && (
-                  <AdminInputEmail
-                    name={key}
-                    regex={props.adatok[key].regex}
-                    objektum={objektum[key]}
-                    esemeny={ertek_modositas}
-                    readOnly={!(sorModosithato && props.adatok[key].modosithato)}
-                  />
-                )}
-                {props.adatok[key].tipus === "number" && (
-                  <AdminInputNumber
-                    name={key}
-                    min={props.adatok[key].min}
-                    max={props.adatok[key].max}
-                    objektum={objektum[key]}
-                    esemeny={ertek_modositas}
-                    readOnly={!(sorModosithato && props.adatok[key].modosithato)}
-                  />
-                )}
-                {props.adatok[key].tipus === "date" && (
-                  <AdminInputDate
+                {InputComponent && (
+                  <InputComponent
                     name={key}
                     objektum={objektum[key]}
                     esemeny={ertek_modositas}
-                    readOnly={!(sorModosithato && props.adatok[key].modosithato)}
+                    readOnly={!(sorModosithato && adat.modosithato)}
+                    {...(adat.tipus === "selectQuery" && {
+                      uri: adat.uri,
+                      kapcsoltAdat: adat.kapcsoltAdat,
+                    })}
                   />
                 )}
-                {props.adatok[key].tipus === "datetime" && (
-                  <AdminInputDateTime
-                    name={key}
-                    objektum={objektum[key]}
-                    esemeny={ertek_modositas}
-                    readOnly={!(sorModosithato && props.adatok[key].modosithato)}
-                  />
-                )}
-                {props.adatok[key].tipus === "select" && (
-                  <AdminInputSelect
-                    name={key}
-                    objektum={objektum[key]}
-                    esemeny={ertek_modositas}
-                    lista={props.adatok[key].lista}
-                    readOnly={!(sorModosithato && props.adatok[key].modosithato)}
-                  />
-                )}
-                {props.adatok[key].tipus === "selectQuery" && (
-                  <AdminInputSelectQuery
-                    name={key}
-                    objektum={objektum[key]}
-                    esemeny={ertek_modositas}
-                    uri={props.adatok[key].uri}
-                    readOnly={!(sorModosithato && props.adatok[key].modosithato)}
-                  />
-                )}
-                {props.adatok[key].tipus === "selectQuerySelf" && (
-
-                  <AdminInputSelectQuerySelf
-                    name={key}
-                    objektum={objektum[key]}  
-                    esemeny={ertek_modositas}  
-                    uri={props.adatok[key].uri}
-                    readOnly={!(sorModosithato && props.adatok[key].modosithato)}
-                  />
-
-                )}
-
               </td>
-            )}
-          </Fragment>
-        );
+            </Fragment>
+          );
+        }
+        return null;
       })}
       <td>
         {sorModosithato ? (
-          <Button variant="outline-success" onClick={mentes}>
-            Mentés
-          </Button>
+          <Button variant="outline-success" onClick={mentes}>Mentés</Button>
         ) : (
-          <Button variant="outline-success" onClick={modosithatova_allitas}>
-            Módosítás
-          </Button>
+          <Button variant="outline-success" onClick={modosithatova_allitas}>Módosítás</Button>
         )}
       </td>
       <td>
         {sorModosithato ? (
-          <Button variant="outline-danger" onClick={megse}>
-            Mégse
-          </Button>
+          <Button variant="outline-danger" onClick={megse}>Mégse</Button>
         ) : (
           <Button variant="outline-secondary" onClick={torles} disabled>
-            <i className="bi bi-lock-fill"></i>
-            Törlés
+            <i className="bi bi-lock-fill"></i> Törlés
           </Button>
         )}
       </td>

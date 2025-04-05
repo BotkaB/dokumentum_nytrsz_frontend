@@ -12,7 +12,7 @@ const lista = [
         adatok: {
           elsodleges_kulcs: ["id"],
           id: {
-            tipus: "text",
+            tipus: "number",
             modosithato: false,
             kotelezo: true,
             fejlec: "azon",
@@ -39,11 +39,12 @@ const lista = [
           },
          
             role: {
-              tipus: "text",
+              tipus: "number",
               modosithato: true,
               kotelezo: true,
               alapertek: "",
-              regex: "[0-3]{1}",
+              min:0,
+              max:3,
               fejlec: "role",
               lathato: true,
             },
@@ -232,17 +233,25 @@ const lista = [
         },
         adatok: {
           elsodleges_kulcs: ["ugyfel_tipus_id"],
-          ugyfel_id: {
+          ugyfel_tipus_id: {
             tipus: "number",
             modosithato: false,
             kotelezo: true,
             fejlec: "azon",
             lathato: true,
           },
-          ugyfel_fotipus: {
-            tipus: "selectQuerySelf",
-            modosithato: true,
+
+          ugyfel_fotipus_id: {
+            tipus: "number",
+            modosithato: false,
             kotelezo: true,
+            fejlec: "foazon",
+            lathato: true,
+          },
+          ugyfel_fotipus: {
+            tipus: "text",
+            modosithato: true,
+            kotelezo: false,
             fejlec: "főtípus",
             lathato: true,
           },
@@ -254,6 +263,7 @@ const lista = [
             fejlec: "elnevezés",
             lathato: true,
           },
+        
           created_at: {
             tipus: "text",
             modosithato: false,
@@ -270,11 +280,13 @@ const lista = [
             fejlec: "módosítva",
             lathato: false,
           },
+          
         },
         alapObj: {
           ugyfel_tipus_id: "",
+          ugyfel_fotipus_id:"",
           ugyfel_fotipus:"",
-          elnevezés: "",
+          elnevezes: "",
           
         },
      

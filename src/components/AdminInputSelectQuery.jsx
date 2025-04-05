@@ -1,69 +1,74 @@
-import { useEffect, useState } from "react";
-import { myAxios } from "../api/axios";
+import { Fragment, useState, useEffect } from "react";
+import useAdatContext from "../contexts/AdatContext"; 
 
-export default function AdminInputSelectQuerySelf(props) {
+export default function AdminInputSelectQuery(props) {
+  const { objLista, loading } = useAdatContext(); // A contextből lekérjük az adatokat
   const [lista, setLista] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
-  // Adatok lekérdezése
-  async function lekerdezes() {
-    setLoading(true);
-    try {
-      const { data } = await myAxios.get(props.uri);
-      console.log("Lekért adatok:", data);
-
-      // Hierarchikus adatfeldolgozás: Főtípus nevének hozzáadása
-      const parsedData = data.map((item) => {
-        const fotipus = data.find(
-          (tipus) => tipus.ugyfel_tipus_id === item.ugyfel_fotipus
-        );
-        return {
-          ...item,
-          fotipusNev: fotipus ? fotipus.elnevezes : null, // Hozzáadjuk a főtípus nevét
-        };
-      });
-
-      setLista(parsedData);
-    } catch (error) {
-      console.error("Hiba a lekérdezés közben:", error);
-      setError("Hiba történt az adatok betöltésekor.");
-    } finally {
-      setLoading(false);
-    }
-  }
+  // A kapcsolt adatokat biztosítjuk
+  const ertekMezo = props.kapcsoltAdat?.ertekMezo;
+  const szovegMezo = props.kapcsoltAdat?.szovegMezo;
 
   useEffect(() => {
-    lekerdezes();
-  }, [props.uri]);
+    // Adatok beállítása a kapcsoltAdat alapján
+    if (!loading) {
+      const kapcsoltLista = objLista.map(item => ({
+        ertek: item[ertekMezo] || '',  // Alapértelmezett üres érték, ha nem található
+        szoveg: item[szovegMezo] || '' // Alapértelmezett üres érték, ha nem található
+      }));
+      setLista(kapcsoltLista);
+    }
+  }, [objLista, ertekMezo, szovegMezo, loading]);
 
-  const valtozas = (event) => {
-    props.esemeny(event); // Esemény továbbítása a szülő komponensnek
-  };
-
-  // Hiba- és betöltési állapot kezelése
+  // Ha az adatok betöltése folyamatban van, megjelenítünk egy "Loading..." üzenetet
   if (loading) {
-    return <p>Betöltés...</p>;
+    return <div>Loading...</div>;
   }
 
-  if (error) {
-    return <p>{error}</p>;
+  // A változás eseménykezelése
+  function valtozas(event) {
+    props.esemeny(event);
   }
+
+  const id = "admin_form_" + props.name; // Generáljuk az id-t az input mezőhöz
 
   return (
-    <select
-      name={props.name}
-      value={props.objektum || ""}
-      onChange={valtozas}
-      disabled={props.readOnly}
-    >
-      <option value="">-- Válassz egyet --</option>
-      {lista.map((item) => (
-        <option key={item.ugyfel_tipus_id} value={item.ugyfel_tipus_id}>
-          {item.elnevezes}
-          {item.fotipusNev && ` (${item.fotipusNev})`}
-        </option>
-      ))}
-    </select>
+    <>
+      {props.readOnly ? (
+        <div className="form-group">
+          <label htmlFor={id} className="p-0 m-0">
+            {props.label || ""}
+          </label>
+          <select name={props.name} id={id} disabled value={props.objektum || ''}>
+            <option value={props.objektum}>{props.label || ""}</option>
+          </select>
+        </div>
+      ) : (
+        <div className="form-group">
+          <label htmlFor={id} className="p-0 m-0">
+            {props.label || ""}
+          </label>
+          <select
+            value={props.objektum || ''}
+            name={props.name}
+            id={id} // id beállítása
+            onChange={valtozas}
+          >
+            <option value="">-- Válassz --</option>
+            {lista.map((value, index) => {
+              const optionValue = value.ertek || ''; // Az alapértelmezett érték
+              const optionText = value.szoveg || ''; // Az alapértelmezett szöveg
+              return (
+                <Fragment key={index}>
+                  <option value={optionValue}>
+                    {optionText}
+                  </option>
+                </Fragment>
+              );
+            })}
+          </select>
+        </div>
+      )}
+    </>
   );
 }

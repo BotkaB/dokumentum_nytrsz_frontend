@@ -72,13 +72,17 @@ export default function AdminForm(props) {
                 {props.adatok[key].modosithato && (
                   <Col>
                     <div className="form-group">
-                      <label className="p-0 m-0" htmlFor={"admin_form_" + key}>
+                      <label
+                        className="p-0 m-0"
+                        htmlFor={"admin_form_" + key} // Hozzáadva az id-nek megfelelő for
+                      >
                         {props.adatok[key].fejlec}:
                       </label>
                       <>
                         {props.adatok[key].tipus === "text" && (
                           <AdminInputText
                             name={key}
+                            id={"admin_form_" + key} // id hozzáadása
                             regex={props.adatok[key].regex}
                             objektum={objektum[key]}
                             esemeny={ertek_modositas}
@@ -89,6 +93,7 @@ export default function AdminForm(props) {
                         {props.adatok[key].tipus === "password" && (
                           <AdminInputPassword
                             name={key}
+                            id={"admin_form_" + key} // id hozzáadása
                             objektum={objektum[key]}
                             esemeny={ertek_modositas}
                             readOnly={false}
@@ -98,6 +103,7 @@ export default function AdminForm(props) {
                         {props.adatok[key].tipus === "email" && (
                           <AdminInputEmail
                             name={key}
+                            id={"admin_form_" + key} // id hozzáadása
                             regex={props.adatok[key].regex}
                             objektum={objektum[key]}
                             esemeny={ertek_modositas}
@@ -108,6 +114,7 @@ export default function AdminForm(props) {
                         {props.adatok[key].tipus === "number" && (
                           <AdminInputNumber
                             name={key}
+                            id={"admin_form_" + key} // id hozzáadása
                             min={props.adatok[key].min}
                             max={props.adatok[key].max}
                             objektum={objektum[key]}
@@ -119,6 +126,7 @@ export default function AdminForm(props) {
                         {props.adatok[key].tipus === "date" && (
                           <AdminInputDate
                             name={key}
+                            id={"admin_form_" + key} // id hozzáadása
                             objektum={objektum[key]}
                             esemeny={ertek_modositas}
                             readOnly={false}
@@ -128,6 +136,7 @@ export default function AdminForm(props) {
                         {props.adatok[key].tipus === "datetime" && (
                           <AdminInputDateTime
                             name={key}
+                            id={"admin_form_" + key} // id hozzáadása
                             objektum={objektum[key]}
                             esemeny={ertek_modositas}
                             readOnly={false}
@@ -137,6 +146,7 @@ export default function AdminForm(props) {
                         {props.adatok[key].tipus === "select" && (
                           <AdminInputSelect
                             name={key}
+                            id={"admin_form_" + key} // id hozzáadása
                             objektum={objektum[key]}
                             esemeny={ertek_modositas}
                             lista={props.adatok[key].lista}
@@ -147,6 +157,7 @@ export default function AdminForm(props) {
                         {props.adatok[key].tipus === "selectQuery" && (
                           <AdminInputSelectQuery
                             name={key}
+                            id={"admin_form_" + key} // id hozzáadása
                             objektum={objektum[key]}
                             esemeny={ertek_modositas}
                             uri={props.adatok[key].uri}

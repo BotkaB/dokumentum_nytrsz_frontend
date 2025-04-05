@@ -14,13 +14,31 @@ export const AdatProvider = ({ children }) => {
     const url = tabla.apik.indexUrl;
     try {
       const { data } = await myAxios.get(url);
-      setObjLista(data);
+      console.log(data);
+      console.log(objLista);
+
+      if (tabla === lista.users) {
+        const updatedData = data.map(item => ({
+          ...item,
+          password: "",
+          password_confirmation: ""
+        }));
+        setObjLista(updatedData);
+
+
+      } else{setObjLista(data)};
+      console.log(data);
+
     } catch (error) {
       console.error(error);
     } finally {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    console.log(objLista); // Most már az új objLista
+  }, [objLista]);
 
   useEffect(() => {
     adatlekeres();
@@ -30,7 +48,8 @@ export const AdatProvider = ({ children }) => {
   const valtoztatasTabla = (tablaValaszto) => {
     const t = lista[tablaValaszto]; // Közvetlen hozzáférés a megfelelő táblához (nem find)
     if (t) {
-      setTabla(t); // Ha találunk, beállítjuk
+      setTabla(t);
+      console.log(t) // Ha találunk, beállítjuk
     } else {
       console.error(`A(z) ${tablaValaszto} tábla nem található!`); // Ha nem találunk, hibát dobunk
     }

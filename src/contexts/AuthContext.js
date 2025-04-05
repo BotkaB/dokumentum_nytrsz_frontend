@@ -31,9 +31,9 @@ export const AuthProvider = ({ children }) => {
   };
   
   useEffect(() => {
-   // if (user){
+   if (!user){
       getUser();
-   // }
+    }
   }, [ ]);
 
   const logout = async () => {
@@ -65,6 +65,7 @@ useEffect(() => {
 
     try {
       const response = await myAxios.post(vegpont, adat);
+      getUser();
       console.log("siker:", response.data);
 
       // Ellenőrizzük, hogy a válasz tartalmazza-e a user adatokat

@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useState } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
-import {myAxios} from "../api/axios";
+import { myAxios } from "../api/axios";
 import AdminInputText from "./AdminInputText";
 import AdminInputNumber from "./AdminInputNumber";
 import AdminInputDate from "./AdminInputDate";
@@ -10,9 +10,19 @@ import AdminInputDateTime from "./AdminInputDateTime";
 import AdminInputSelectQuery from "./AdminInputSelectQuery";
 import AdminInputPassword from "./AdminInputPassword";
 
+// CSRF token kezeléshez szükséges függvény
+const csrf = async () => {
+  try {
+    await myAxios.get("/sanctum/csrf-cookie");
+  } catch (error) {
+    console.error("CSRF token lekérés hibája:", error);
+  }
+};
+
 export default function AdminForm(props) {
   const [objektum, setObjektum] = useState(props.alapObj);
 
+  // A mezők változásainak figyelése
   function ertek_modositas(event) {
     setObjektum({ ...objektum, [event.target.name]: event.target.value });
     console.log(objektum);
@@ -22,26 +32,20 @@ export default function AdminForm(props) {
     setObjektum(props.alapObj);
   }, [props]);
 
+  // Form elküldése
   function elkuld(event) {
     event.preventDefault();
     axiosPost();
   }
 
-  const csrf = async () => {
-    try {
-      const { data: token } = await myAxios.get("/token");
-      return token;
-    } catch (error) {
-      console.log(error);
-      return false;
-    }
-  };
-
+  // Az adatküldés axios-szal
   async function axiosPost() {
+    await csrf(); // Kérjük le a CSRF tokent elküldés előtt
+
     try {
       const response = await myAxios.post(props.apik.storeUrl, {
         ...objektum,
-        _token: await csrf(),
+        _token: await csrf(), // A CSRF token
       });
       console.log(response);
       props.frissites();
@@ -51,7 +55,12 @@ export default function AdminForm(props) {
   }
 
   return (
-    <form className="admin-form py-3" onSubmit={elkuld} method="post" style={{ backgroundColor: "red" }}>
+    <form
+      className="admin-form py-3"
+      onSubmit={elkuld}
+      method="post"
+      style={{ backgroundColor: "red" }}
+    >
       <Container
         className="admin-form-wrapper"
         style={{ display: "block", height: "auto" }}
@@ -153,12 +162,7 @@ export default function AdminForm(props) {
           })}
         </Row>
       </Container>
-      <Button
-        variant="outline-success"
-        as="input"
-        type="submit"
-        value="Felvitel"
-      />{" "}
+      <Button variant="outline-success" as="input" type="submit" value="Felvitel" />
     </form>
   );
 }

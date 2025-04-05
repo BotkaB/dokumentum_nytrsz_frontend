@@ -1,44 +1,69 @@
-import { Fragment,  useState } from "react";
-import {myAxios} from "../api/axios";
+import { useEffect, useState } from "react";
+import { myAxios } from "../api/axios";
 
-export default function AdminInputSelectQuery(props) {
+export default function AdminInputSelectQuerySelf(props) {
   const [lista, setLista] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
+  // Adatok lekérdezése
   async function lekerdezes() {
+    setLoading(true);
     try {
       const { data } = await myAxios.get(props.uri);
-      setLista(data);
+      console.log("Lekért adatok:", data);
+
+      // Hierarchikus adatfeldolgozás: Főtípus nevének hozzáadása
+      const parsedData = data.map((item) => {
+        const fotipus = data.find(
+          (tipus) => tipus.ugyfel_tipus_id === item.ugyfel_fotipus
+        );
+        return {
+          ...item,
+          fotipusNev: fotipus ? fotipus.elnevezes : null, // Hozzáadjuk a főtípus nevét
+        };
+      });
+
+      setLista(parsedData);
     } catch (error) {
-      console.error(error);
+      console.error("Hiba a lekérdezés közben:", error);
+      setError("Hiba történt az adatok betöltésekor.");
+    } finally {
+      setLoading(false);
     }
   }
 
-  function valtozas(event) {
-    props.esemeny(event);
+  useEffect(() => {
+    lekerdezes();
+  }, [props.uri]);
+
+  const valtozas = (event) => {
+    props.esemeny(event); // Esemény továbbítása a szülő komponensnek
+  };
+
+  // Hiba- és betöltési állapot kezelése
+  if (loading) {
+    return <p>Betöltés...</p>;
+  }
+
+  if (error) {
+    return <p>{error}</p>;
   }
 
   return (
-    <>
-      {props.readOnly ? (
-        <select name={props.name} disabled value={props.objektum}>
-          <option value={props.objektum}>{props.objektum}</option>
-        </select>
-      ) : (
-        <select
-          value={props.objektum}
-          name={props.name}
-          onFocus={lekerdezes}
-          onChange={valtozas}
-        >
-          {lista.map((value, index) => {
-            return (
-              <Fragment key={index}>
-                <option value={value}>{value}</option>
-              </Fragment>
-            );
-          })}
-        </select>
-      )}
-    </>
+    <select
+      name={props.name}
+      value={props.objektum || ""}
+      onChange={valtozas}
+      disabled={props.readOnly}
+    >
+      <option value="">-- Válassz egyet --</option>
+      {lista.map((item) => (
+        <option key={item.ugyfel_tipus_id} value={item.ugyfel_tipus_id}>
+          {item.elnevezes}
+          {item.fotipusNev && ` (${item.fotipusNev})`}
+        </option>
+      ))}
+    </select>
   );
 }

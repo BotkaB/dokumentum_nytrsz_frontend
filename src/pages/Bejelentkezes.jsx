@@ -7,7 +7,7 @@ import useValidationContext from "../contexts/ValidationContext";
 export default function Bejelentkezes() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [submitted,setSubmitted] =useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
   //const navigate = useNavigate();
   const { loginReg, errors, setErrors } = useAuthContext();
@@ -25,24 +25,24 @@ export default function Bejelentkezes() {
     };
     console.log(adat);
 
-    const validation=validateEmailAndPassword(adat)
+    const validation = validateEmailAndPassword(adat)
     console.log(validation)
 
 
     if (Object.keys(validation).length === 0) {
-    loginReg(adat, "/login");
+      loginReg(adat, "/login");
     }
   };
 
   useEffect(() => {
- console.log(validationErrors)
+    console.log(validationErrors)
     if (submitted && validationErrors) {
       setErrors(validationErrors)
       setSubmitted(false);
     }
-   
-  }, [validationErrors, submitted, setErrors]); 
-  
+
+  }, [validationErrors, submitted, setErrors]);
+
 
   return (
     <div className="m-auto" style={{ maxWidth: "400px" }}>

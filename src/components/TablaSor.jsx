@@ -8,6 +8,7 @@ import AdminInputSelect from "./AdminInputSelect";
 import AdminInputEmail from "./AdminInputEmail";
 import AdminInputDateTime from "./AdminInputDateTime";
 import AdminInputSelectQuery from "./AdminInputSelectQuery";
+import AdminInputSelectQuerySelf from "./AdminInputSelectQuerySelf";
 import AdminInputPassword from "./AdminInputPassword";
 
 export default function TablaSor(props) {
@@ -37,6 +38,18 @@ export default function TablaSor(props) {
     setRegiObjektum(props.obj);
     setSorModosithato(false);
     SetLathatosag("");
+
+
+    const initCsrf = async () => {
+      try {
+
+        console.log("CSRF token beállítva (TablaSor)");
+      } catch (error) {
+        console.error("CSRF token beállítása sikertelen:", error);
+      }
+    };
+
+    initCsrf();
   }, [props]);
 
   function modosithatova_allitas() {
@@ -44,43 +57,27 @@ export default function TablaSor(props) {
     setSorModosithato(true);
   }
 
-  const csrf = async () => {
-    let visszater;
-    try {
-      const { data: token } = await myAxios.get("/token");
-      visszater = token;
-    } catch (error) {
-      console.log(error);
-      visszater = false;
-    }
-
-    return visszater;
-  };
-
   function ertek_modositas(event) {
     setObjektum({ ...objektum, [event.target.name]: event.target.value });
   }
 
-  function mentes() {
-    let modositottId = sorIdGeneralas();
-    try {
-      axiosModositas(modositottId);
-      setSorModosithato(false);
-      console.log(
-        modositottId + ". azonosítójú sor módosítva!",
-        regiObjektum,
-        objektum
-      );
-    } catch (error) {
-      console.error(error);
-    }
-  }
+  async function mentes() {
+    const modositottId = sorIdGeneralas();
+    const payload = { ...objektum };
 
-  async function axiosModositas(modositottId) {
-    await myAxios.put(props.apik.updateUrl + `/${modositottId}`, {
-      ...objektum,
-      _token: await csrf(),
-    });
+    console.log("Mentésre küldött objektum:", payload);
+
+    try {
+      await myAxios.put(`${props.apik.updateUrl}/${modositottId}`, objektum);
+      setSorModosithato(false);
+      console.log(`${modositottId}. azonosítójú sor módosítva!`, regiObjektum, objektum);
+    } catch (error) {
+      if (error.response) {
+        console.error("Mentés sikertelen:", error.response.data);
+      } else {
+        console.error("Mentés sikertelen:", error);
+      }
+    }
   }
 
   function megse() {
@@ -88,30 +85,24 @@ export default function TablaSor(props) {
     setSorModosithato(false);
   }
 
-  function torles() {
+  async function torles() {
     const torlendoId = sorIdGeneralas();
     try {
-      const axiosTorles = async () => {
-        await myAxios.delete(props.apik.destroyUrl + `/${torlendoId}`, {
-          headers: {
-            "X-CSRF-TOKEN": await csrf(),
-          },
-        });
-        SetLathatosag("none");
-        console.log(torlendoId + " azonosítójú sor törölve!");
-      };
-      axiosTorles();
-      // }
+      await myAxios.delete(`${props.apik.destroyUrl}/${torlendoId}`);
+      SetLathatosag("none");
+      console.log(`${torlendoId} azonosítójú sor törölve!`);
     } catch (error) {
-      console.error(error);
+      console.error("Törlés sikertelen:", error);
     }
   }
+
+
 
   return (
     <tr style={{ display: lathatosag }}>
       {Object.keys(objektum).map(function (key, index) {
         return (
-          <Fragment key={index}>
+          <Fragment key={key}>
             {props.adatok[key] && props.adatok[key].lathato && (
               <td>
                 {props.adatok[key].tipus === "text" && (
@@ -120,30 +111,24 @@ export default function TablaSor(props) {
                     regex={props.adatok[key].regex}
                     objektum={objektum[key]}
                     esemeny={ertek_modositas}
-                    readOnly={
-                      !(sorModosithato && props.adatok[key].modosithato)
-                    }
+                    readOnly={!(sorModosithato && props.adatok[key].modosithato)}
                   />
                 )}
-
                 {props.adatok[key].tipus === "password" && (
                   <AdminInputPassword
                     name={key}
-                    objektum={sorModosithato ? " " : objektum[key]} // Módosításkor üres
+                    objektum={sorModosithato ? " " : objektum[key]}
                     esemeny={ertek_modositas}
                     readOnly={!sorModosithato}
                   />
                 )}
-
                 {props.adatok[key].tipus === "email" && (
                   <AdminInputEmail
                     name={key}
                     regex={props.adatok[key].regex}
                     objektum={objektum[key]}
                     esemeny={ertek_modositas}
-                    readOnly={
-                      !(sorModosithato && props.adatok[key].modosithato)
-                    }
+                    readOnly={!(sorModosithato && props.adatok[key].modosithato)}
                   />
                 )}
                 {props.adatok[key].tipus === "number" && (
@@ -153,9 +138,7 @@ export default function TablaSor(props) {
                     max={props.adatok[key].max}
                     objektum={objektum[key]}
                     esemeny={ertek_modositas}
-                    readOnly={
-                      !(sorModosithato && props.adatok[key].modosithato)
-                    }
+                    readOnly={!(sorModosithato && props.adatok[key].modosithato)}
                   />
                 )}
                 {props.adatok[key].tipus === "date" && (
@@ -163,9 +146,7 @@ export default function TablaSor(props) {
                     name={key}
                     objektum={objektum[key]}
                     esemeny={ertek_modositas}
-                    readOnly={
-                      !(sorModosithato && props.adatok[key].modosithato)
-                    }
+                    readOnly={!(sorModosithato && props.adatok[key].modosithato)}
                   />
                 )}
                 {props.adatok[key].tipus === "datetime" && (
@@ -173,9 +154,7 @@ export default function TablaSor(props) {
                     name={key}
                     objektum={objektum[key]}
                     esemeny={ertek_modositas}
-                    readOnly={
-                      !(sorModosithato && props.adatok[key].modosithato)
-                    }
+                    readOnly={!(sorModosithato && props.adatok[key].modosithato)}
                   />
                 )}
                 {props.adatok[key].tipus === "select" && (
@@ -184,9 +163,7 @@ export default function TablaSor(props) {
                     objektum={objektum[key]}
                     esemeny={ertek_modositas}
                     lista={props.adatok[key].lista}
-                    readOnly={
-                      !(sorModosithato && props.adatok[key].modosithato)
-                    }
+                    readOnly={!(sorModosithato && props.adatok[key].modosithato)}
                   />
                 )}
                 {props.adatok[key].tipus === "selectQuery" && (
@@ -195,11 +172,21 @@ export default function TablaSor(props) {
                     objektum={objektum[key]}
                     esemeny={ertek_modositas}
                     uri={props.adatok[key].uri}
-                    readOnly={
-                      !(sorModosithato && props.adatok[key].modosithato)
-                    }
+                    readOnly={!(sorModosithato && props.adatok[key].modosithato)}
                   />
                 )}
+                {props.adatok[key].tipus === "selectQuerySelf" && (
+
+                  <AdminInputSelectQuerySelf
+                    name={key}
+                    objektum={objektum[key]}  
+                    esemeny={ertek_modositas}  
+                    uri={props.adatok[key].uri}
+                    readOnly={!(sorModosithato && props.adatok[key].modosithato)}
+                  />
+
+                )}
+
               </td>
             )}
           </Fragment>
@@ -216,7 +203,6 @@ export default function TablaSor(props) {
           </Button>
         )}
       </td>
-
       <td>
         {sorModosithato ? (
           <Button variant="outline-danger" onClick={megse}>

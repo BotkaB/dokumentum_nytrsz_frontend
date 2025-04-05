@@ -101,25 +101,25 @@ const lista = [
           password: "",
         },
       },
-      ügyfels: {
+      ugyfels: {
         elnevezes: "Ügyfelek",
         apik: {
-          indexUrl: "api/ugyfelek",
-          showUrl: "api/ugyfelek",
-          storeUrl: "api/ugyfelek",
-          updateUrl: "api/ugyfelek",
-          destroyUrl: "api/ugyfelek",
+          indexUrl: "api/ugyfels",
+          showUrl: "api/ugyfels",
+          storeUrl: "api/ugyfels",
+          updateUrl: "api/ugyfels",
+          destroyUrl: "api/ugyfels",
         },
         adatok: {
-          elsodleges_kulcs: ["belso_kod"],
-          belso_kod: {
-            tipus: "text",
+          elsodleges_kulcs: ["ugyfel_id"],
+          ugyfel_id: {
+            tipus: "number",
             modosithato: false,
             kotelezo: true,
             fejlec: "azon",
             lathato: true,
           },
-          név: {
+          nev: {
             tipus: "text",
             modosithato: true,
             kotelezo: true,
@@ -129,7 +129,7 @@ const lista = [
             fejlec: "név",
             lathato: true,
           },
-          születési_név: {
+          szuletesi_nev: {
             tipus: "text",
             modosithato: true,
             kotelezo: true,
@@ -150,7 +150,7 @@ const lista = [
             lathato: true,
           },
           
-          születési_hely: {
+          szuletesi_hely: {
             tipus: "text",
             modosithato: true,
             kotelezo: true,
@@ -158,7 +158,7 @@ const lista = [
             fejlec: "születési hely",
             lathato: true,
           },
-          születési_idő: {
+          szuletesi_ido: {
             tipus: "date",
             modosithato: true,
             kotelezo: true,
@@ -166,12 +166,12 @@ const lista = [
             fejlec: "születési idő",
             lathato: true,
           },
-          lakcím: {
+          telepules: {
             tipus: "text",
             modosithato: true,
             kotelezo: true,
             alapertek:"",
-            fejlec: "lakcím",
+            fejlec: "település",
             lathato: true,
           },
           neme: {
@@ -182,7 +182,7 @@ const lista = [
             fejlec: "neme",
             lathato: true,
           },
-          ügyfélkód: {
+          ugyfelkod: {
             tipus: "number",
             modosithato: true,
             kotelezo: true,
@@ -210,20 +210,76 @@ const lista = [
           },
         },
         alapObj: {
-          belso_kod: "",
-          név: "",
-          születési_név: "",
+          ugyfel_id: "",
+          nev: "",
+          szuletesi_nev: "",
           anyja_neve: "",
-         születési_hely:"",
-         születési_idő:"",
-         lakcím:"",
-         neme:"",
-         ügyfélkód:""
+          szuletesi_hely:"",
+          szuletesi_ido:"",
+          telepules:"",
+          neme:"férfi",
+          ugyfelkod:""
         },
       },
-  
+      ugyfel_tipuses: {
+        elnevezes: "Ügyféltípusok",
+        apik: {
+          indexUrl: "api/ugyfel_tipuses",
+          showUrl: "api/ugyfel_tipuses",
+          storeUrl: "api/ugyfel_tipuses",
+          updateUrl: "api/ugyfel_tipuses",
+          destroyUrl: "api/ugyfel_tipuses",
+        },
+        adatok: {
+          elsodleges_kulcs: ["ugyfel_tipus_id"],
+          ugyfel_id: {
+            tipus: "number",
+            modosithato: false,
+            kotelezo: true,
+            fejlec: "azon",
+            lathato: true,
+          },
+          ugyfel_fotipus: {
+            tipus: "selectQuerySelf",
+            modosithato: true,
+            kotelezo: true,
+            fejlec: "főtípus",
+            lathato: true,
+          },
+
+          elnevezes: {
+            tipus: "text",
+            modosithato: true,
+            kotelezo: true,
+            fejlec: "elnevezés",
+            lathato: true,
+          },
+          created_at: {
+            tipus: "text",
+            modosithato: false,
+            kotelezo: false,
+            alapertek: "",
+            fejlec: "létrehozva",
+            lathato: false,
+          },
+          updated_at: {
+            tipus: "text",
+            modosithato: false,
+            kotelezo: false,
+            alapertek: "",
+            fejlec: "módosítva",
+            lathato: false,
+          },
+        },
+        alapObj: {
+          ugyfel_tipus_id: "",
+          ugyfel_fotipus:"",
+          elnevezés: "",
+          
+        },
      
     },
+  }
   ][0];
   
 export default lista;  

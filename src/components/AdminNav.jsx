@@ -5,8 +5,7 @@ export default function AdminNav() {
     return (
         <NavDropdown title="Admin" id="basic-nav-dropdown">
             <NavDropdown.Item as={Link} to="/admin/felhasznalok">Felhasználók</NavDropdown.Item>
-
-            <NavDropdown.Item href="#action/3.2">Ügyfelek</NavDropdown.Item>
+            <NavDropdown.Item as={Link} to="/admin/ugyfeltipusok">Ügyfél típusok</NavDropdown.Item>
             <NavDropdown.Divider />
         </NavDropdown>
     )

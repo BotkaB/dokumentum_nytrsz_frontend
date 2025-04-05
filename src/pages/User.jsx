@@ -12,7 +12,7 @@ export default function User() {
   const [submitted, setSubmitted] = useState(false);
 
   // Context
-  const { loginReg, errors, setErrors, user } = useAuthContext();
+  const { loginReg, errors, setErrors, user, getUser } = useAuthContext();
   const { validateRegistration, validationErrors } = useValidationContext();
 
   // Ha a felhasználó már be van jelentkezve, töltsük be az adatokat
@@ -22,6 +22,7 @@ export default function User() {
       setEmail(user.email || "");
       setId(user.id || "");
       setRole(user.role || "");
+     
     }
   }, [user]);
 

@@ -19,6 +19,7 @@ import { AdatProvider } from "./contexts/AdatContext.js";
 
 
 function App() {
+  
     return (
         <BrowserRouter>
             <ValidationProvider>
@@ -40,7 +41,8 @@ function App() {
 
                             <Route path="/admin" element={<Admin />} />
                             <Route path="/admin/felhasznalok" element={<AdminArticle tabla="users" />} />
-                            <Route path="/admin/ugyfelek" element={<AdminArticle tabla="ugyfels" />} />
+                            <Route path="/admin/ugyfeltipusok" element={<AdminArticle tabla="ugyfel_tipuses" />} />
+                            <Route path="/documents/ugyfelek" element={<AdminArticle tabla="ugyfels" />} />
                             </Route>
 
                         </Routes>

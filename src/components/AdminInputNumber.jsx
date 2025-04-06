@@ -10,7 +10,7 @@ export default function AdminInputNumber(props) {
             type="number"
             name={props.name}
             onChange={valtozas}
-            value={props.objektum}
+            value={props.objektum || ""}
             readOnly
             disabled
             min={props.min}
@@ -22,7 +22,7 @@ export default function AdminInputNumber(props) {
             type="number"
             name={props.name}
             onChange={valtozas}
-            value={props.objektum}
+            value={props.objektum|| ""}
             min={props.min}
             max={props.max}
             

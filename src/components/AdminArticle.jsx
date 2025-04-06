@@ -8,7 +8,7 @@ import useAdatContext from "../contexts/AdatContext";
 
 export default function AdminArticle(props) {
   const { objLista, loading, adatlekeres, tabla, valtoztatasTabla } = useAdatContext();
-  const [filteredObjLista, setFilteredObjLista] = useState(objLista); // Szűrt lista állapot
+  const [filteredObjLista, setFilteredObjLista] = useState(objLista || []); // Kezdetben az objLista vagy üres tömb
 
   useEffect(() => {
     console.log("Aktív tábla:", props.tabla);
@@ -22,6 +22,11 @@ export default function AdminArticle(props) {
       adatlekeres();
     }
   }, [tabla]);
+
+  // Automatikus frissítés a lista változásakor
+  useEffect(() => {
+    setFilteredObjLista(objLista);  // Ha az objLista frissül, frissítjük a filteredObjLista-t
+  }, [objLista]);
 
   // Szűrési logika
   const handleSearch = (searchTerm) => {

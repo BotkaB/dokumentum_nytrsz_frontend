@@ -1,13 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import "../css/adminArticle.css";
 import AdminForm from "./AdminForm";
 import AdminTabla from "./AdminTabla";
+import Search from "./Search";  // Kereső komponens importálása
 import useAdatContext from "../contexts/AdatContext"; 
 
 export default function AdminArticle(props) {
   const { objLista, loading, adatlekeres, tabla, valtoztatasTabla } = useAdatContext();
-
+  const [filteredObjLista, setFilteredObjLista] = useState(objLista); // Szűrt lista állapot
 
   useEffect(() => {
     console.log("Aktív tábla:", props.tabla);
@@ -16,28 +17,35 @@ export default function AdminArticle(props) {
     }
   }, [props.tabla]);
 
-/*  useEffect(() => {
-    adatlekeres(); 
-  }, [tabla, adatlekeres]);
-*/
+  useEffect(() => {
+    if (tabla) {
+      adatlekeres();
+    }
+  }, [tabla]);
 
-useEffect(() => {
-  if (tabla) {
-    adatlekeres();
-  }
-}, [tabla]);
+  // Szűrési logika
+  const handleSearch = (searchTerm) => {
+    if (!searchTerm) {
+      setFilteredObjLista(objLista); // Ha nincs keresési kifejezés, az eredeti lista
+    } else {
+      const filtered = objLista.filter(item =>
+        Object.values(item).some(value =>
+          value && value.toString().toLowerCase().includes(searchTerm.toLowerCase())
+        )
+      );
+      setFilteredObjLista(filtered); // A szűrt lista beállítása
+    }
+  };
 
-
-const tablaElnevezes = tabla ? tabla.elnevezes || "Betöltés..." : "Betöltés...";
-
+  const tablaElnevezes = tabla ? tabla.elnevezes || "Betöltés..." : "Betöltés...";
 
   return (
     <article className="admin-article">
       <h2>{tablaElnevezes}</h2>
       <Container fluid className="admin-container">
         {loading ? (
-          <p>Töltés...</p>  
-        ) : objLista.length > 0 ? (
+          <p>Töltés...</p>
+        ) : filteredObjLista.length > 0 ? (
           <>
             <AdminForm
               alapObj={tabla ? tabla.alapObj : null} 
@@ -45,11 +53,15 @@ const tablaElnevezes = tabla ? tabla.elnevezes || "Betöltés..." : "Betöltés.
               apik={tabla ? tabla.apik : []} 
               frissites={adatlekeres}
             />
+            
+            {/* Kereső komponens */}
+            <Search onSearch={handleSearch} />
 
-            <AdminTabla adatok={tabla ? tabla.adatok : []} objLista={objLista} apik={tabla ? tabla.apik : []} />
+            {/* A szűrt adatokat átadjuk a táblázatnak */}
+            <AdminTabla adatok={tabla ? tabla.adatok : []} objLista={filteredObjLista} apik={tabla ? tabla.apik : []} />
           </>
         ) : (
-          <p>Nincs adat</p> 
+          <p>Nincs adat</p>
         )}
       </Container>
     </article>

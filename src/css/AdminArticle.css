@@ -74,3 +74,29 @@
   border: 0;
 }
 
+.search-container {
+  margin-top: 20px; /* A form alatt legyen egy kis távolság */
+  margin-bottom: 20px; /* Táblázat előtt is legyen egy kis távolság */
+  width: 100%;
+  }
+  
+  .search-input {
+    width: 100%; /* A kereső input széles legyen */
+    max-width: 500px; /* Ne legyen túl széles, ha nagyobb képernyőn van */
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #0f0f0f;
+    border-radius: 5px;
+  
+  }
+  
+  .admin-table {
+    margin-top: 30px; /* Kisebb távolság a táblázat és a kereső mező között */
+  }
+  
+
+  
+
+
+
+

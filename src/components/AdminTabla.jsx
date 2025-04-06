@@ -1,4 +1,4 @@
-import { Table } from "react-bootstrap";
+import  Table from "react-bootstrap/Table";
 import TablaFejlecSor from "./TablaFejlecSor";
 import TablaSor from "./TablaSor";
 

@@ -7,8 +7,9 @@ const AdatContext = createContext();
 export const AdatProvider = ({ children }) => {
   const [objLista, setObjLista] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [tabla, setTabla] = useState(lista.users); // Alapértelmezett tábla az első (pl. 'users')
-console.log(lista.users)
+  const [tabla, setTabla] = useState(lista.users); 
+
+
   // Adatok lekérése az aktuális táblához
   const adatlekeres = async () => {
     console.log("adatlekeres fut. Aktuális tabla:", tabla);

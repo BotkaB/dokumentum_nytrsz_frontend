@@ -9,6 +9,8 @@ import AdminInputDateTime from "./AdminInputDateTime";
 import AdminInputSelect from "./AdminInputSelect";
 import AdminInputSelectQuery from "./AdminInputSelectQuery";
 import AdminInputPassword from "./AdminInputPassword";
+import useAdatContext from "../contexts/AdatContext";
+import FormError from "./FormError";  // Importálás a hibakezeléshez
 
 const inputComponentMap = {
   text: AdminInputText,
@@ -26,6 +28,8 @@ export default function TablaSor(props) {
   const [objektum, setObjektum] = useState(props.obj);
   const [regiObjektum, setRegiObjektum] = useState(props.obj);
   const [lathatosag, setLathatosag] = useState("");
+  const { adatlekeres } = useAdatContext();
+  const [errors, setErrors] = useState({});
 
   const sorIdGeneralas = () => {
     const kulcsok_lista = props.adatok.elsodleges_kulcs;
@@ -57,8 +61,14 @@ export default function TablaSor(props) {
     try {
       await myAxios.put(`${props.apik.updateUrl}/${modositottId}`, objektum);
       setSorModosithato(false);
+      adatlekeres();
+      setErrors({});
     } catch (error) {
       console.error("Mentés sikertelen:", error.response?.data || error);
+      if (error.response && error.response.data.errors) {
+        // Ha validációs hiba van, akkor azokat beállítjuk
+        setErrors(error.response.data.errors);
+      }
     }
   };
 
@@ -87,16 +97,20 @@ export default function TablaSor(props) {
             <Fragment key={key}>
               <td>
                 {InputComponent && (
-                  <InputComponent
-                    name={key}
-                    objektum={objektum[key]}
-                    esemeny={ertek_modositas}
-                    readOnly={!(sorModosithato && adat.modosithato)}
-                    {...(adat.tipus === "selectQuery" && {
-                      uri: adat.uri,
-                      kapcsoltAdat: adat.kapcsoltAdat,
-                    })}
-                  />
+                  <Fragment>
+                    <InputComponent
+                      name={key}
+                      objektum={objektum[key]}
+                      esemeny={ertek_modositas}
+                      readOnly={!(sorModosithato && adat.modosithato)}
+                      {...(adat.tipus === "selectQuery" && {
+                        uri: adat.uri,
+                        kapcsoltAdat: adat.kapcsoltAdat,
+                      })}
+                    />
+                    {/* Hibakezelés megjelenítése */}
+                    <FormError errors={errors} fieldName={key} />
+                  </Fragment>
                 )}
               </td>
             </Fragment>

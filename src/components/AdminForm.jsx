@@ -9,6 +9,7 @@ import AdminInputEmail from "./AdminInputEmail";
 import AdminInputDateTime from "./AdminInputDateTime";
 import AdminInputSelectQuery from "./AdminInputSelectQuery";
 import AdminInputPassword from "./AdminInputPassword";
+import FormError from "./FormError"; // Importálás a hibák megjelenítéséhez
 
 // CSRF token kezeléshez szükséges függvény
 const csrf = async () => {
@@ -21,6 +22,7 @@ const csrf = async () => {
 
 export default function AdminForm(props) {
   const [objektum, setObjektum] = useState(props.alapObj);
+  const [errors, setErrors] = useState({}); // Hibák állapota
 
   // A mezők változásainak figyelése
   function ertek_modositas(event) {
@@ -51,6 +53,10 @@ export default function AdminForm(props) {
       props.frissites();
     } catch (error) {
       console.error(error);
+      if (error.response && error.response.data.errors) {
+        // Ha validációs hiba van, akkor azokat beállítjuk
+        setErrors(error.response.data.errors);
+      }
     }
   }
 
@@ -59,7 +65,7 @@ export default function AdminForm(props) {
       className="admin-form py-3"
       onSubmit={elkuld}
       method="post"
-      style={{ backgroundColor: "red" }}
+      style={{ backgroundColor: "lightgrey" }}
     >
       <Container
         className="admin-form-wrapper"
@@ -165,6 +171,8 @@ export default function AdminForm(props) {
                           />
                         )}
                       </>
+                      {/* Hibák megjelenítése */}
+                      <FormError errors={errors} fieldName={key} />
                     </div>
                   </Col>
                 )}
@@ -173,7 +181,7 @@ export default function AdminForm(props) {
           })}
         </Row>
       </Container>
-      <Button variant="outline-success" as="input" type="submit" value="Felvitel" />
+      <Button variant="primary" as="input" type="submit" value="Felvitel" />
     </form>
   );
 }

@@ -24,7 +24,7 @@ export default function Kezdolap() {
          
         
      
-      )  ):(<>Kedves Felhasználó!</>)}
+      )  ):(<p style={pStyle}>Kedves Felhasználó!</p>)}
     </article>
   );
 }
@@ -43,7 +43,7 @@ const articleStyle = {
 };
 
 const pStyle = {
-  margin: '0 0 0.5rem 0',
-  paddingLeft: '0.6rem', 
-  fontSize: '1.1rem'
+  margin: '0.1rem 0 0 0',
+  paddingLeft: '1.5rem', 
+  fontSize: '1.9rem'
 };

@@ -21,6 +21,13 @@ export default function AdminArticle(props) {
   }, [tabla, adatlekeres]);
 */
 
+useEffect(() => {
+  if (tabla) {
+    adatlekeres();
+  }
+}, [tabla]);
+
+
 const tablaElnevezes = tabla ? tabla.elnevezes || "Betöltés..." : "Betöltés...";
 
 

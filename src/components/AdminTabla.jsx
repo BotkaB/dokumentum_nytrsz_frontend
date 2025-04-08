@@ -4,7 +4,7 @@ import TablaSor from "./TablaSor";
 
 export default function AdminTabla(props) {
   return (
-    <Table responsive striped className="admin-table">
+    <Table responsiv striped className="admin-table">
       <thead>
         <TablaFejlecSor adatok={props.adatok} />
       </thead>

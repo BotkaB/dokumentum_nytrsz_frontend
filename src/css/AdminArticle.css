@@ -1,71 +1,101 @@
-/* Az .admin-article osztályú elemeket blokk szintűvé teszi */
+
 .admin-article {
   display: block;
-  padding: 20px 0; /* Több helyet ad a szöveg és a tartalom között */
-
+ 
 }
 
-/* Admin header formázása */
+
 .admin-article h2 {
   margin-bottom: 20px;
-  margin-left: 20px; /* Térköz a h2 és az alatta lévő tartalom között */
-  font-size: 1.8rem; /* Igény szerint módosítható a betűméret */
-  font-weight: 600; /* Erősebb betűk */
-  color: #333; /* Sötét szín a jobb olvashatóság érdekében */
+  margin-left: 20px; 
+  font-size: 1.8rem; 
+  font-weight: 600; 
+  color: #333; 
 }
 
-/* Admin container formázása */
 .admin-container {
-  width: 100%; /* Az admin container kitölti a szélességet */
+  width: 100%; 
 }
 
-/* Form group és input elemek közötti távolság */
-.form-group {
-  margin-bottom: 20px; /* Térköz a különböző form mezők között */
-}
-
-.form-group label {
-  display: block; /* A label blokk szintű elem legyen */
-  margin-bottom: 8px; /* Térköz a label és az input mező között */
-  font-size: 1rem; /* Alapértelmezett betűméret */
-  color: black; /* Szöveg színe */
-}
-
-/* Az input mezők alapstílusai */
-.admin-form input,
-.admin-form select {
-  width: 100%; /* Az input mezők teljes szélességben */
-  min-width: 250px; /* Minimum szélesség biztosítása */
-  padding: 8px; /* Belső margó az input mezőn */
-  font-size: 1rem; /* Betűméret */
-  border: 2px solid #d7d4d4; /* A keret színe */
-  border-radius: 4px; /* Kerekített sarkok */
-  box-sizing: border-box; /* Az input mezők a paddingot is figyelembe veszik a szélességnél */
-}
-
-/* A gombot középre igazítjuk */
 .admin-form {
   display: flex;
   flex-direction: column;
+  background-color: lightgrey;
+
 }
 
-.admin-form input[type=submit] {
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem; 
+
+}
+
+.form-group {
+  width: 100%;
+  max-width: 30rem;
+
+}
+
+.form-group-label {
+  display: block; 
+  font-size: 1rem; 
+  color: black; 
+
+}
+
+
+.admin-form input,
+.admin-form select {
+  width: 100%;
+  max-width: 40rem;
+  padding: 0.5rem; 
+  font-size: 1rem; 
+  border: 0.3rem solid #d7d4d4; 
+  border-radius: 4px; 
+  box-sizing: border-box; 
+}
+
+
+.admin-form [type=submit] {
   width: auto;
-  margin-top: 10px;
-  padding: 10px 20px;
+  margin-bottom: 1rem;;
+  padding: 1rem;
   font-size: 1.5rem;
-  align-self: center; /* Csak a gombot igazítja középre */
+  align-self: center;
+ 
+ 
+}
+
+.admin-table {
+  align-self: center;
+  width: 100%;
+  margin-top: 1rem;
+  table-layout: auto; 
+}
+
+.admin-table td, 
+.admin-table th {
+  padding: 0.1rem;
+  border: 1px solid #d7d4d4;
+  word-wrap: break-word; 
+  white-space: normal; 
+  text-align: center;
 }
 
 
-
-
-/* Az input mezők és select elemek a táblázatban */
 .admin-table input,
 .admin-table select {
-  width: 100%; /* Az input mezők teljes szélessége */
-  padding: 8px; /* Belső margó az input mezőn */
+  width: auto; 
+  max-width: 100%; 
+  font-size: 1rem;
+  border: 0.2rem solid #d7d4d4;
+  border-radius: 4px;
+  box-sizing: border-box;
+   min-width: 10rem; 
 }
+
 
 /* Az olvasható (read-only) input mezők átlátszó háttérrel és határ nélkül jelennek meg */
 .admin-table input:read-only,
@@ -75,24 +105,28 @@
 }
 
 .search-container {
-  margin-top: 20px; /* A form alatt legyen egy kis távolság */
-  margin-bottom: 20px; /* Táblázat előtt is legyen egy kis távolság */
+  margin-top: 20px; 
+  margin-bottom: 20px; 
   width: 100%;
   }
   
   .search-input {
-    width: 100%; /* A kereső input széles legyen */
-    max-width: 500px; /* Ne legyen túl széles, ha nagyobb képernyőn van */
+    width: 100%; 
+    max-width: 500px; 
     padding: 10px;
     font-size: 16px;
     border: 1px solid #0f0f0f;
     border-radius: 5px;
   
   }
-  
-  .admin-table {
-    margin-top: 30px; /* Kisebb távolság a táblázat és a kereső mező között */
+
+  @media (min-width: 576px) {
+    .admin-table td, .admin-table th {
+      white-space: nowrap; /* Ne törje a szöveget szélesebb képernyőkön */
+    }
   }
+  
+
   
 
   

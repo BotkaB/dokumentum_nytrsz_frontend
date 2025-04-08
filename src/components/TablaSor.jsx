@@ -106,7 +106,6 @@ export default function TablaSor(props) {
                       readOnly={!(sorModosithato && adat.modosithato)}
                       {...(adat.tipus === "selectQuery" && {
                         uri: adat.uri,
-                        kapcsoltAdat: adat.kapcsoltAdat,
                       })}
                     />
                     {/* Hibakezelés megjelenítése */}

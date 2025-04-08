@@ -8,6 +8,7 @@ export default function AdminNav() {
             <NavDropdown.Item as={Link} to="/admin/megvalositasihelyszinek">Megvalósítási helyszínek</NavDropdown.Item>
             <NavDropdown.Item as={Link} to="/admin/elszamolastipusok">Elszámolás típusok</NavDropdown.Item>
             <NavDropdown.Item as={Link} to="/admin/ugyfeltipusok">Ügyfél típusok</NavDropdown.Item>
+            <NavDropdown.Item as={Link} to="/admin/dokumentumtipusok">Dokumentum típusok</NavDropdown.Item>
             <NavDropdown.Divider />
         </NavDropdown>
     )

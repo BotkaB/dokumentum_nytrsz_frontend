@@ -316,7 +316,7 @@ const lista = [
           modosithato: false,
           kotelezo: true,
           fejlec: "foazon",
-          lathato: true,
+          lathato: false,
         },
         intezet: {
           tipus: "text",
@@ -393,6 +393,7 @@ const lista = [
         storeUrl: "api/elszamolas_tipuses",
         updateUrl: "api/elszamolas_tipuses",
         destroyUrl: "api/elszamolas_tipuses",
+
       },
       adatok: {
         elsodleges_kulcs: ["elszamolas_tipus_id"],
@@ -433,6 +434,71 @@ const lista = [
       alapObj: {
         eszamolas_tipus_id: "",
         elszamolas_elnevezese: "",
+
+      },
+
+    },
+
+    dokumentum_tipuses: {
+      elnevezes: "Dokumentum típusok",
+      apik: {
+        indexUrl: "api/dokumentum_tipuses",
+        showUrl: "api/dokumentum_tipuses",
+        storeUrl: "api/dokumentum_tipuses",
+        updateUrl: "api/dokumentum_tipuses",
+      
+      
+      },
+      adatok: {
+        elsodleges_kulcs: ["dokumentum_tipus_id"],
+        dokumentum_tipus_id: {
+          tipus: "number",
+          modosithato: false,
+          kotelezo: true,
+          fejlec: "azon",
+          lathato: true,
+        },
+
+        elszamolas_tipus_id: { 
+          tipus: "text",
+          modosithato: true,
+          kotelezo: true,
+          alapertek:"",
+          fejlec: "elszámolás típus (FK)",
+       
+          lathato: true, 
+        },
+
+        dokumentum_neve: {
+          tipus: "text",
+          modosithato: true,
+          kotelezo: true,
+          fejlec: "elnevezés",
+          lathato: true,
+        },
+
+        created_at: {
+          tipus: "text",
+          modosithato: false,
+          kotelezo: false,
+          alapertek: "",
+          fejlec: "létrehozva",
+          lathato: false,
+        },
+        updated_at: {
+          tipus: "text",
+          modosithato: false,
+          kotelezo: false,
+          alapertek: "",
+          fejlec: "módosítva",
+          lathato: false,
+        },
+
+      },
+      alapObj: {
+        dokumentum_tipus_id: "",
+        elszamolas_tipus_id:"",
+        dokumentum_neve: "",
 
       },
 

@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useState } from "react";
-import { Button, Col, Container, Row } from "react-bootstrap";
+import { Button, Col, Container, Row} from "react-bootstrap";
 import { myAxios } from "../api/axios";
 import AdminInputText from "./AdminInputText";
 import AdminInputNumber from "./AdminInputNumber";
@@ -64,24 +64,22 @@ export default function AdminForm(props) {
 
   return (
     <form
-      className="admin-form py-3"
+      className="admin-form"
       onSubmit={elkuld}
       method="post"
-      style={{ backgroundColor: "lightgrey" }}
+     
     >
-      <Container
-        className="admin-form-wrapper"
-        style={{ display: "block", height: "auto" }}
-      >
-        <Row>
+      <Container>
+      <Row className="form-row">
+
           {Object.keys(props.adatok).map(function (key, index) {
             return (
               <Fragment key={index}>
                 {props.adatok[key].modosithato && (
-                  <Col>
+                  <Col xs="12" sm="6" md="4" lg="3" xl="3">
                     <div className="form-group">
-                      <label
-                        className="p-0 m-0"
+                      <label className="form-group-label"
+                    
                         htmlFor={"admin_form_" + key} // Hozzáadva az id-nek megfelelő for
                       >
                         {props.adatok[key].fejlec}:

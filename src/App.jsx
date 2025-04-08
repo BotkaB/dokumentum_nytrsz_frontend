@@ -42,6 +42,7 @@ function App() {
                             <Route path="/admin" element={<Admin />} />
                             <Route path="/admin/felhasznalok" element={<AdminArticle tabla="users" />} />
                             <Route path="/admin/megvalositasihelyszinek" element={<AdminArticle tabla="megvalositasi_helyszins" />} />
+                            <Route path="/admin/elszamolastipusok" element={<AdminArticle tabla="elszamolas_tipuses" />} />
                             <Route path="/admin/ugyfeltipusok" element={<AdminArticle tabla="ugyfel_tipuses" />} />
                             <Route path="/documents/ugyfelek" element={<AdminArticle tabla="ugyfels" />} />
                             </Route>

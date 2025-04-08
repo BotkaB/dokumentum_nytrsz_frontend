@@ -51,6 +51,8 @@ export default function AdminForm(props) {
       });
       console.log(response);
       props.frissites();
+      setErrors({});
+
     } catch (error) {
       console.error(error);
       if (error.response && error.response.data.errors) {

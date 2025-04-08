@@ -291,6 +291,100 @@ const lista = [
         },
      
     },
+
+    megvalositasi_helyszins: {
+      elnevezes: "Megvalósítási helyszínek",
+      apik: {
+        indexUrl: "api/megvalositasi_helyszins",
+        showUrl: "api/megvalositasi_helyszins",
+        storeUrl: "api/megvalositasi_helyszins",
+        updateUrl: "api/megvalositasi_helyszins",
+        destroyUrl: "api/megvalositasi_helyszins",
+      },
+      adatok: {
+        elsodleges_kulcs: ["megvalositasi_helyszin_id"],
+        megvalositasi_helyszin_id: {
+          tipus: "number",
+          modosithato: false,
+          kotelezo: true,
+          fejlec: "azon",
+          lathato: true,
+        },
+
+        intezet_id: {
+          tipus: "number",
+          modosithato: false,
+          kotelezo: true,
+          fejlec: "foazon",
+          lathato: true,
+        },
+        intezet: {
+          tipus: "text",
+          modosithato: true,
+          kotelezo: false,
+          fejlec: "intézet",
+          lathato: true,
+        },
+        nev: {
+          tipus: "text",
+          modosithato: true,
+          kotelezo: true,
+          alapertek: "",
+          fejlec: "név",
+          lathato: true,
+        },
+        agglomeracio: {
+          tipus: "number",
+          modosithato: true,
+          kotelezo: false,
+          alapertek: "",
+          fejlec: "agglomeráció",
+          lathato: true,
+        },
+        regio: {
+          tipus: "text",
+          modosithato: true,
+          kotelezo: false,
+          alapertek: "",
+          fejlec: "régió",
+          lathato: true,
+        },
+        tipus: {
+          tipus: "text",
+          modosithato: true,
+          kotelezo: false,
+          alapertek: "",
+          fejlec: "típus",
+          lathato: true,
+        },
+        created_at: {
+          tipus: "text",
+          modosithato: false,
+          kotelezo: false,
+          alapertek: "",
+          fejlec: "létrehozva",
+          lathato: false,
+        },
+        updated_at: {
+          tipus: "text",
+          modosithato: false,
+          kotelezo: false,
+          alapertek: "",
+          fejlec: "módosítva",
+          lathato: false,
+        },
+      },
+      alapObj: {
+        megvalositasi_helyszin_id: "",
+        intezet_id:"",
+        intezet: "",
+        nev: "",
+        agglomeracio: "",
+        regio: "",
+        tipus: ""
+      },
+    }
+    
   }
   ][0];
   

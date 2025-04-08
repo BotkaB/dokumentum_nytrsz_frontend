@@ -75,6 +75,7 @@ export default function TablaSor(props) {
   const megse = () => {
     setObjektum(regiObjektum);
     setSorModosithato(false);
+    setErrors({});
   };
 
   const torles = async () => {

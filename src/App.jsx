@@ -45,6 +45,7 @@ function App() {
                             <Route path="/admin/elszamolastipusok" element={<AdminArticle tabla="elszamolas_tipuses" />} />
                             <Route path="/admin/ugyfeltipusok" element={<AdminArticle tabla="ugyfel_tipuses" />} />
                             <Route path="/admin/dokumentumtipusok" element={<AdminArticle tabla="dokumentum_tipuses" />} />
+                            <Route path="/admin/ugyfeltipusokdokumentumai" element={<AdminArticle tabla="ugyfel_tipusok_dokumentumai" />} />
                             <Route path="/documents/ugyfelek" element={<AdminArticle tabla="ugyfels" />} />
                             </Route>
 

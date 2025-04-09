@@ -17,10 +17,10 @@ const headerStyle = {
   position: 'relative',
   overflow: 'hidden',
   background: '#e0e0e0',
-  padding: '20px',
+  padding: '0.8rem',
   width: '100%',
   boxSizing: 'border-box',
-  height: '140px'
+  height: '6rem'
 };
 
 const scrollTextStyle = {
@@ -31,7 +31,7 @@ const scrollTextStyle = {
   overflow: 'hidden',
   display: 'flex',
   alignItems: 'center',
-  top: '2rem'
+  top: '0.2rem'
 };
 
 const pStyle = {

@@ -16,7 +16,7 @@ const lista = [
           modosithato: false,
           kotelezo: true,
           fejlec: "azon",
-          lathato: true,
+          lathato: false,
         },
         name: {
           tipus: "text",
@@ -118,7 +118,7 @@ const lista = [
           modosithato: false,
           kotelezo: true,
           fejlec: "azon",
-          lathato: true,
+          lathato: false,
         },
         nev: {
           tipus: "text",
@@ -238,7 +238,7 @@ const lista = [
           modosithato: false,
           kotelezo: true,
           fejlec: "azon",
-          lathato: true,
+          lathato: false,
         },
 
         ugyfel_fotipus_id: {
@@ -246,7 +246,7 @@ const lista = [
           modosithato: false,
           kotelezo: true,
           fejlec: "foazon",
-          lathato: true,
+          lathato: false,
         },
         ugyfel_fotipus: {
           tipus: "text",
@@ -308,7 +308,7 @@ const lista = [
           modosithato: false,
           kotelezo: true,
           fejlec: "azon",
-          lathato: true,
+          lathato: false,
         },
 
         intezet_id: {
@@ -402,7 +402,7 @@ const lista = [
           modosithato: false,
           kotelezo: true,
           fejlec: "azon",
-          lathato: true,
+          lathato: false,
         },
 
         elszamolas_elnevezese: {
@@ -456,22 +456,20 @@ const lista = [
           modosithato: false,
           kotelezo: true,
           fejlec: "azon",
-          lathato: true,
+          lathato: false,
         },
 
         elszamolas_tipus_id: {
           tipus: "selectQuery",
-          url: "api/elszamolas_tipuses",  
           kapcsoltAdat: [
             {
-              ertekMezo: "elszamolas_tipus_id",  // Első külső kulcs
-              szovegMezo: "elszamolas_elnevezese", // Mi lesz a megjelenített érték
-              kulcsok: ["elszamolas_tipus_id"],  // Itt van a kulcsok beállítása
+              ertekMezo: "elszamolas_tipus_id",  
+              szovegMezo: "elszamolas_elnevezese", 
             },
           ],
           modosithato: true,
           kotelezo: true,
-          fejlec: "elszámolás típus (FK)",
+          fejlec: "elszámolás típus",
           lathato: true,
         },
         
@@ -511,6 +509,77 @@ const lista = [
 
     },
 
+    ugyfel_tipusok_dokumentumai: {
+      elnevezes: "Ügyféltípusok és dokumentumaik kapcsolata",
+      apik: {
+        indexUrl: "api/ugyfel_tipusok_dokumentumai",
+        showUrl: "api/ugyfel_tipusok_dokumentumai",
+        storeUrl: "api/ugyfel_tipusok_dokumentumai",
+        updateUrl: "api/ugyfel_tipusok_dokumentumai",
+      },
+      adatok: {
+        elsodleges_kulcs: ["id"],
+        
+        id: {
+          tipus: "number",
+          modosithato: false,
+          kotelezo: true,
+          fejlec: "azon",
+          lathato: false,
+        },
+    
+        ugyfel_tipus_id: {
+          tipus: "selectQuery",
+          kapcsoltAdat: [
+            {
+              ertekMezo: "ugyfel_fotipus",
+              szovegMezo: "elnevezes",
+            },
+          ],
+          modosithato: true,
+          kotelezo: true,
+          fejlec: "ügyféltípus",
+          lathato: true,
+        },
+    
+        dokumentum_tipus_id: {
+          tipus: "selectQuery",
+          kapcsoltAdat: [
+            {
+              ertekMezo: "dokumentum_tipus_id",
+              szovegMezo: "dokumentum_neve",
+            },
+          ],
+          modosithato: true,
+          kotelezo: true,
+          fejlec: "dokumentum típus",
+          lathato: true,
+        },
+    
+        created_at: {
+          tipus: "text",
+          modosithato: false,
+          kotelezo: false,
+          alapertek: "",
+          fejlec: "létrehozva",
+          lathato: false,
+        },
+    
+        updated_at: {
+          tipus: "text",
+          modosithato: false,
+          kotelezo: false,
+          alapertek: "",
+          fejlec: "módosítva",
+          lathato: false,
+        },
+      },
+      alapObj: {
+        ugyfel_tipus_id: "",
+        dokumentum_tipus_id: "",
+      },
+    }
+    
   }
 ][0];
 

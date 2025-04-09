@@ -61,7 +61,7 @@
 .admin-form [type=submit] {
   width: auto;
   margin-bottom: 1rem;;
-  padding: 1rem;
+  padding: 0.2rem 0.7rem;
   font-size: 1.5rem;
   align-self: center;
  

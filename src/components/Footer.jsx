@@ -14,8 +14,6 @@ const footerStyle = {
   padding: '10px', // Csökkentjük a paddinget
   width: '100%',
   boxSizing: 'border-box',
-  bottom: 0,
-  position: 'fixed',
   textAlign: 'center',
   height: '40px' // Alacsonyabb magasság
 };

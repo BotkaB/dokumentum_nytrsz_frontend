@@ -3,8 +3,9 @@ import { Container } from "react-bootstrap";
 import "../css/adminArticle.css";
 import AdminForm from "./AdminForm";
 import AdminTabla from "./AdminTabla";
-import Search from "./Search";  // Kereső komponens importálása
+import Search from "./Search";  
 import useAdatContext from "../contexts/AdatContext"; 
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function AdminArticle(props) {
   const { objLista, loading, adatlekeres, tabla, valtoztatasTabla } = useAdatContext();
@@ -58,11 +59,7 @@ export default function AdminArticle(props) {
               apik={tabla ? tabla.apik : []} 
               frissites={adatlekeres}
             />
-            
-            {/* Kereső komponens */}
             <Search onSearch={handleSearch} />
-
-            {/* A szűrt adatokat átadjuk a táblázatnak */}
             <AdminTabla adatok={tabla ? tabla.adatok : []} objLista={filteredObjLista} apik={tabla ? tabla.apik : []} />
           </>
         ) : (

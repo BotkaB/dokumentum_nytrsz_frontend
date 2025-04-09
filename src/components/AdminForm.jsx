@@ -9,7 +9,8 @@ import AdminInputEmail from "./AdminInputEmail";
 import AdminInputDateTime from "./AdminInputDateTime";
 import AdminInputSelectQuery from "./AdminInputSelectQuery";
 import AdminInputPassword from "./AdminInputPassword";
-import FormError from "./FormError"; // Importálás a hibák megjelenítéséhez
+import FormError from "./FormError";
+import { notify } from './NotificationService';
 
 // CSRF token kezeléshez szükséges függvény
 const csrf = async () => {
@@ -52,6 +53,7 @@ export default function AdminForm(props) {
       console.log(response);
       props.frissites();
       setErrors({});
+      notify("success", "A felvitel sikeresen megtörtént!");
 
     } catch (error) {
       console.error(error);
@@ -59,6 +61,7 @@ export default function AdminForm(props) {
         // Ha validációs hiba van, akkor azokat beállítjuk
         setErrors(error.response.data.errors);
       }
+      notify("error", "A felvitel sikertelen volt. Kérjük próbálja újra.");
     }
   }
 

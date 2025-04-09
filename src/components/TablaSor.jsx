@@ -11,6 +11,8 @@ import AdminInputSelectQuery from "./AdminInputSelectQuery";
 import AdminInputPassword from "./AdminInputPassword";
 import useAdatContext from "../contexts/AdatContext";
 import FormError from "./FormError";  // Importálás a hibakezeléshez
+import 'react-toastify/dist/ReactToastify.css';
+import { notify } from './NotificationService';
 
 const inputComponentMap = {
   text: AdminInputText,
@@ -56,21 +58,32 @@ export default function TablaSor(props) {
     setObjektum({ ...objektum, [event.target.name]: event.target.value });
   };
 
+
   const mentes = async () => {
     const modositottId = sorIdGeneralas();
     try {
-      await myAxios.put(`${props.apik.updateUrl}/${modositottId}`, objektum);
-      setSorModosithato(false);
-      adatlekeres();
-      setErrors({});
+      // API hívás és válasz
+      const response = await myAxios.put(`${props.apik.updateUrl}/${modositottId}`, objektum);
+  
+      // Ha sikeres válasz érkezik
+      if (response && response.status === 200) {
+        setSorModosithato(false);
+        adatlekeres();
+        setErrors({});
+        notify("success", "A módosítás sikeresen megtörtént!");
+        console.error("Mentés sikeres");
+      }
     } catch (error) {
+      // Ha validációs hiba van
       console.error("Mentés sikertelen:", error.response?.data || error);
       if (error.response && error.response.data.errors) {
-        // Ha validációs hiba van, akkor azokat beállítjuk
         setErrors(error.response.data.errors);
+        notify("error", "A módosítás sikertelen volt. Kérjük próbálja újra.");
       }
+      setObjektum(regiObjektum);
     }
   };
+  
 
   const megse = () => {
     setObjektum(regiObjektum);

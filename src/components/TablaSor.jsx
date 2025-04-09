@@ -105,8 +105,10 @@ export default function TablaSor(props) {
                       esemeny={ertek_modositas}
                       readOnly={!(sorModosithato && adat.modosithato)}
                       {...(adat.tipus === "selectQuery" && {
-                        uri: adat.uri,
+                        url: adat.url, 
+                        kapcsoltAdat: adat.kapcsoltAdat,
                       })}
+                      
                     />
                     {/* Hibakezelés megjelenítése */}
                     <FormError errors={errors} fieldName={key} />

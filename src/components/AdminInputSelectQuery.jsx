@@ -1,74 +1,74 @@
-import { Fragment, useState, useEffect } from "react";
-import useAdatContext from "../contexts/AdatContext"; 
+import { useEffect, useState } from "react";
+import { myAxios } from "../api/axios";
 
-export default function AdminInputSelectQuery(props) {
-  const { objLista, loading } = useAdatContext(); // A contextből lekérjük az adatokat
-  const [lista, setLista] = useState([]);
-
-  // A kapcsolt adatokat biztosítjuk
-  const ertekMezo = props.kapcsoltAdat?.ertekMezo;
-  const szovegMezo = props.kapcsoltAdat?.szovegMezo;
+const AdminInputSelectQuery = ({ url, kapcsoltAdat, esemeny, name, objektum, readOnly }) => {
+  const [options, setOptions] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [selectedValue, setSelectedValue] = useState(objektum);
 
   useEffect(() => {
-    // Adatok beállítása a kapcsoltAdat alapján
-    if (!loading) {
-      const kapcsoltLista = objLista.map(item => ({
-        ertek: item[ertekMezo] || '',  // Alapértelmezett üres érték, ha nem található
-        szoveg: item[szovegMezo] || '' // Alapértelmezett üres érték, ha nem található
-      }));
-      setLista(kapcsoltLista);
-    }
-  }, [objLista, ertekMezo, szovegMezo, loading]);
+    if (!url || !kapcsoltAdat || kapcsoltAdat.length === 0) return;
 
-  // Ha az adatok betöltése folyamatban van, megjelenítünk egy "Loading..." üzenetet
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const response = await myAxios.get(url);
+        const fetchedData = response.data;
 
-  // A változás eseménykezelése
-  function valtozas(event) {
-    props.esemeny(event);
-  }
+        // Módosított adatlekérdezés a kulcsok alapján
+        const mappedOptions = fetchedData.map((item) => {
+          const option = {};
 
-  const id = "admin_form_" + props.name; // Generáljuk az id-t az input mezőhöz
+          // Töltse fel az opciókat az 'ertekMezo' és 'szovegMezo' alapján
+          if (kapcsoltAdat[0]?.ertekMezo && kapcsoltAdat[0]?.szovegMezo) {
+            option.value = item[kapcsoltAdat[0].ertekMezo];
+            option.label = item[kapcsoltAdat[0].szovegMezo];
+          }
+
+          // Ha több kulcsot szeretnénk kezelni
+          if (kapcsoltAdat[0]?.kulcsok && kapcsoltAdat[0].kulcsok.length > 0) {
+            kapcsoltAdat[0].kulcsok.forEach((key) => {
+              option[key] = item[key];
+            });
+          }
+
+          return option;
+        });
+
+        setOptions(mappedOptions);
+      } catch (error) {
+        console.error("Hiba az adatok lekérésekor:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [url, kapcsoltAdat]);
+
+  const handleChange = (event) => {
+    setSelectedValue(event.target.value);
+    esemeny(event);
+  };
 
   return (
-    <>
-      {props.readOnly ? (
-        <div className="form-group">
-          <label htmlFor={id} className="p-0 m-0">
-            {props.label || ""}
-          </label>
-          <select name={props.name} id={id} disabled value={props.objektum || ''}>
-            <option value={props.objektum}>{props.label || ""}</option>
-          </select>
-        </div>
+    <select
+      name={name}
+      value={selectedValue}
+      onChange={handleChange}
+      disabled={readOnly}
+    >
+      {loading ? (
+        <option>Betöltés...</option>
       ) : (
-        <div className="form-group">
-          <label htmlFor={id} className="p-0 m-0">
-            {props.label || ""}
-          </label>
-          <select
-            value={props.objektum || ''}
-            name={props.name}
-            id={id} // id beállítása
-            onChange={valtozas}
-          >
-            <option value="">-- Válassz --</option>
-            {lista.map((value, index) => {
-              const optionValue = value.ertek || ''; // Az alapértelmezett érték
-              const optionText = value.szoveg || ''; // Az alapértelmezett szöveg
-              return (
-                <Fragment key={index}>
-                  <option value={optionValue}>
-                    {optionText}
-                  </option>
-                </Fragment>
-              );
-            })}
-          </select>
-        </div>
+        options.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))
       )}
-    </>
+    </select>
   );
-}
+};
+
+export default AdminInputSelectQuery;

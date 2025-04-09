@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useState } from "react";
-import { Button, Col, Container, Row} from "react-bootstrap";
+import { Button, Col, Container, Row } from "react-bootstrap";
 import { myAxios } from "../api/axios";
 import AdminInputText from "./AdminInputText";
 import AdminInputNumber from "./AdminInputNumber";
@@ -67,10 +67,10 @@ export default function AdminForm(props) {
       className="admin-form"
       onSubmit={elkuld}
       method="post"
-     
+
     >
       <Container>
-      <Row className="form-row">
+        <Row className="form-row">
 
           {Object.keys(props.adatok).map(function (key, index) {
             return (
@@ -79,7 +79,7 @@ export default function AdminForm(props) {
                   <Col xs="12" sm="6" md="4" lg="3" xl="3">
                     <div className="form-group">
                       <label className="form-group-label"
-                    
+
                         htmlFor={"admin_form_" + key} // Hozzáadva az id-nek megfelelő for
                       >
                         {props.adatok[key].fejlec}:
@@ -163,13 +163,17 @@ export default function AdminForm(props) {
                         {props.adatok[key].tipus === "selectQuery" && (
                           <AdminInputSelectQuery
                             name={key}
-                            id={"admin_form_" + key} // id hozzáadása
+                            id={"admin_form_" + key} 
                             objektum={objektum[key]}
                             esemeny={ertek_modositas}
-                            uri={props.adatok[key].uri}
-                            readOnly={false}
+                            {...(props.adatok[key].tipus === "selectQuery" && {
+                              url: props.adatok[key].url, 
+                              kapcsoltAdat: props.adatok[key].kapcsoltAdat, 
+                            })}
+                            readOnly={false} 
                           />
                         )}
+
                       </>
                       {/* Hibák megjelenítése */}
                       <FormError errors={errors} fieldName={key} />

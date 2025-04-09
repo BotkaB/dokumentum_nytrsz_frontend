@@ -459,21 +459,28 @@ const lista = [
           lathato: true,
         },
 
-        elszamolas_tipus_id: { 
-          tipus: "text",
+        elszamolas_tipus_id: {
+          tipus: "selectQuery",
+          url: "api/elszamolas_tipuses",  
+          kapcsoltAdat: [
+            {
+              ertekMezo: "elszamolas_tipus_id",  // Első külső kulcs
+              szovegMezo: "elszamolas_elnevezese", // Mi lesz a megjelenített érték
+              kulcsok: ["elszamolas_tipus_id"],  // Itt van a kulcsok beállítása
+            },
+          ],
           modosithato: true,
           kotelezo: true,
-          alapertek:"",
           fejlec: "elszámolás típus (FK)",
-       
-          lathato: true, 
+          lathato: true,
         },
+        
 
         dokumentum_neve: {
           tipus: "text",
           modosithato: true,
           kotelezo: true,
-          fejlec: "elnevezés",
+          fejlec: "dokumentum neve",
           lathato: true,
         },
 

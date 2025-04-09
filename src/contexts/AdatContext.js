@@ -16,12 +16,12 @@ export const AdatProvider = ({ children }) => {
     const url = tabla.apik.indexUrl;
     try {
       const { data } = await myAxios.get(url);
-      console.log("API válasz:", data); // Ellenőrizd az API válaszát
+      console.log("API válasz:", data); 
 
-      // Ellenőrizzük, hogy az adat tömb-e
-      const tomb = Array.isArray(data) ? data : (data.data || data); // Ha nem tömb, akkor a data.data kulcsot próbáljuk meg
+      
+      const tomb = Array.isArray(data) ? data : (data.data || data); 
 
-      console.log("Feldolgozott adatok:", tomb); // Logoljuk ki a tomb-ot
+      console.log("Feldolgozott adatok:", tomb); 
 
       if (tabla === lista.users) {
         const updatedData = tomb.map(item => ({
@@ -29,7 +29,7 @@ export const AdatProvider = ({ children }) => {
           password: "",
           password_confirmation: ""
         }));
-       // console.log("Frissített adat:", updatedData); // Ellenőrizd, hogy megfelelően frissült-e az adat
+       
         setObjLista(updatedData);
       } else {
         setObjLista(tomb);
@@ -43,21 +43,21 @@ export const AdatProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    console.log("Aktuális objLista:", objLista); // Most már az új objLista
+    console.log("Aktuális objLista:", objLista); 
   }, [objLista]);
 
   useEffect(() => {
     adatlekeres();
-  }, [tabla]); // Minden alkalommal, amikor a tabla változik
+  }, [tabla]); 
 
-  // Funkció, amivel beállíthatjuk a kívánt tablat
+  
   const valtoztatasTabla = (tablaValaszto) => {
-    const t = lista[tablaValaszto]; // Közvetlen hozzáférés a megfelelő táblához (nem find)
+    const t = lista[tablaValaszto]; 
     if (t) {
       setTabla(t);
-      console.log("Beállított tábla:", t); // Ha találunk, beállítjuk
+      console.log("Beállított tábla:", t);
     } else {
-      console.error(`A(z) ${tablaValaszto} tábla nem található!`); // Ha nem találunk, hibát dobunk
+      console.error(`A(z) ${tablaValaszto} tábla nem található!`); 
     }
   };
 

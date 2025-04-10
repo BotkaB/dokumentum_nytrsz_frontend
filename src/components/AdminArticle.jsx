@@ -24,13 +24,11 @@ export default function AdminArticle(props) {
     }
   }, [props.tabla, valtoztatasTabla]); // figyeljünk a valtoztatasTabla-ra is
 
-  // Adatok lekérése a táblához
   useEffect(() => {
-    // Csak akkor kérjünk új adatokat, ha az objLista üres vagy a tábla változott
-    if (tabla && objLista.length === 0) {
+    if (tabla) {
       adatlekeres();
     }
-  }, [tabla, objLista]); 
+  }, [tabla]);
   // Automatikus frissítés a lista változásakor
   useEffect(() => {
     setFilteredObjLista(objLista);  // Ha az objLista frissül, frissítjük a filteredObjLista-t

@@ -120,6 +120,7 @@ export default function TablaSor(props) {
                     objektum={ertek}
                     esemeny={ertek_modositas}
                     {...(adat.tipus === "selectQuery" && {
+                      url: adat.url, 
                       kapcsoltAdat: adat.kapcsoltAdat,
                     })}
                   />

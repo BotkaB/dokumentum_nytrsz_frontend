@@ -10,7 +10,7 @@ export default function AdminInputEmail(props) {
             type="email"
             name={props.name}
             onChange={valtozas}
-            value={props.objektum}
+            value={props.objektum ?? ""}
             readOnly
             
           />
@@ -19,7 +19,7 @@ export default function AdminInputEmail(props) {
             type="email"
             name={props.name}
             onChange={valtozas}
-            value={props.objektum}
+            value={props.objektum ?? ""}
             
           />
         )}

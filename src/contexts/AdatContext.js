@@ -10,9 +10,8 @@ export const AdatProvider = ({ children }) => {
   const [objLista, setObjLista] = useState([]);
   const [loading, setLoading] = useState(true);
   const [tabla, setTabla] = useState(lista.dokumentum_tipuses);
-  const [kapcsoltAdatok, setKapcsoltAdatok] = useState([]); // Alapértelmezett üres tömb
+ 
 
-  // Adatok lekérése az aktuális táblához
   const adatlekeres = async () => {
     setLoading(true);
     console.log("adatlekeres fut. Aktuális tabla:", tabla);
@@ -21,7 +20,7 @@ export const AdatProvider = ({ children }) => {
       const { data } = await myAxios.get(tabla?.apik.indexUrl);
       console.log("API válasz:", data);
 
-      const tomb = Array.isArray(data) ? data : (data.data || data); // Adatok előkészítése
+      const tomb = Array.isArray(data) ? data : (data.data || data); 
       console.log("Feldolgozott adatok:", tomb);
 
       if (tabla === lista.users) {
@@ -35,34 +34,7 @@ export const AdatProvider = ({ children }) => {
         setObjLista(tomb);
       }
 
-      // Kapcsolt adatok kezelése
-      const kapcsoltAdatokTemp = [];
-      tomb.forEach(item => {
-        if (item.kapcsoltAdatok && item.kapcsoltAdatok.length > 0) {
-          item.kapcsoltAdatok.forEach(kapcsolt => {
-            if (!kapcsoltAdatokTemp.some(k => k.value === kapcsolt.ertekMezo)) {
-              kapcsoltAdatokTemp.push({
-                value: kapcsolt.ertekMezo,  // Az értékmező legyen a "value"
-                label: kapcsolt.szovegMezo,   // A szövegmező pedig a "label"
-              });
-            }
-          });
-        }
-      });
-
-      // Frissítjük a kapcsolt adatokat
-      setKapcsoltAdatok(kapcsoltAdatokTemp);
-      console.log("Kapcsolt adatok:", kapcsoltAdatokTemp);
-
-      // Kapcsolt adatok hozzáadása az adatlistához
-      const updatedData = tomb.map(item => ({
-        ...item,
-        kapcsoltAdatok: kapcsoltAdatokTemp, // Az updatedItem-hez hozzáadjuk a kapcsolt adatokat
-      }));
-
-      console.log(updatedData)
-
-      setObjLista(updatedData); // Frissítjük a listát
+    
     } catch (error) {
       console.error("API hiba:", error);
     } finally {
@@ -70,7 +42,7 @@ export const AdatProvider = ({ children }) => {
     }
   };
 
-  // Tábla választása
+
   const valtoztatasTabla = (tablaValaszto) => {
     const t = lista[tablaValaszto];
     if (t) {
@@ -82,7 +54,7 @@ export const AdatProvider = ({ children }) => {
   };
 
   return (
-    <AdatContext.Provider value={{ objLista, loading, adatlekeres, tabla, valtoztatasTabla, kapcsoltAdatok }}>
+    <AdatContext.Provider value={{ objLista, loading, adatlekeres, tabla, valtoztatasTabla}}>
       {children}
     </AdatContext.Provider>
   );

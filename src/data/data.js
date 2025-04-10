@@ -249,11 +249,18 @@ const lista = [
           lathato: false,
         },
         ugyfel_fotipus: {
-          tipus: "text",
+          tipus: "selectQuery",
           modosithato: true,
           kotelezo: false,
           fejlec: "főtípus",
           lathato: true,
+          url: "api/ugyfel_tipuses", 
+          kapcsoltAdat: [
+            {
+              ertekMezo: "ugyfel_fotipus_id",
+              szovegMezo: "ugyfel_fotipus",
+            },
+          ],
         },
 
         elnevezes: {
@@ -461,6 +468,7 @@ const lista = [
 
         elszamolas_tipus_id: {
           tipus: "selectQuery",
+          url: "api/elszamolas_tipuses", 
           kapcsoltAdat: [
             {
               ertekMezo: "elszamolas_tipus_id",  
@@ -510,7 +518,7 @@ const lista = [
     },
 
     ugyfel_tipusok_dokumentumai: {
-      elnevezes: "Ügyféltípusok és dokumentumaik kapcsolata",
+      elnevezes: "Ügyféltípusok dokumentumai",
       apik: {
         indexUrl: "api/ugyfel_tipusok_dokumentumai",
         showUrl: "api/ugyfel_tipusok_dokumentumai",
@@ -530,6 +538,7 @@ const lista = [
     
         ugyfel_tipus_id: {
           tipus: "selectQuery",
+          url: "api/ugyfel_tipuses", 
           kapcsoltAdat: [
             {
               ertekMezo: "ugyfel_fotipus",
@@ -544,6 +553,7 @@ const lista = [
     
         dokumentum_tipus_id: {
           tipus: "selectQuery",
+          url: "api/dokumentum_tipuses", 
           kapcsoltAdat: [
             {
               ertekMezo: "dokumentum_tipus_id",

@@ -10,7 +10,7 @@ export default function AdminInputDate(props) {
             type="date"
             name={props.name}
             onChange={valtozas}
-            value={props.objektum}
+            value={props.objektum ?? ""}
             readOnly
           />
         ) : (
@@ -18,7 +18,7 @@ export default function AdminInputDate(props) {
             type="date"
             name={props.name}
             onChange={valtozas}
-            value={props.objektum}
+            value={props.objektum ?? ""}
           />
         )}
       </>

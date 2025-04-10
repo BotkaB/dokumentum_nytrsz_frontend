@@ -25,7 +25,8 @@ export default function AdminInputSelect(props) {
           <option value={props.objektum}>{props.objektum}</option>
         </select>
       ) : (
-        <select value={props.objektum} name={props.name} onChange={valtozas}>
+        <select value={props.objektum ?? ""} name={props.name} onChange={valtozas}>
+          {!props.objektum && <option value="">-- Válassz egyet --</option>}
           {(Array.isArray(lista) ? lista : []).map((value, index) => {
             return (
               <Fragment key={index}>

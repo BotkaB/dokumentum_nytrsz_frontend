@@ -102,58 +102,84 @@ export default function TablaSor(props) {
   };
 
   return (
-<tr style={{ display: lathatosag }}>
-  {Object.keys(objektum).map((key) => {
-    const adat = props.adatok[key];
-    if (adat && adat.lathato) {
-      const InputComponent = inputComponentMap[adat.tipus];
-      const ertek = objektum[key];
-
-      return (
-        <Fragment key={key}>
-          <td>
-            {sorModosithato && adat.modosithato ? (
-              <>
-                {InputComponent && (
-                  <InputComponent
-                    name={key}
-                    objektum={ertek}
-                    esemeny={ertek_modositas}
-                    {...(adat.tipus === "selectQuery" && {
-                      url: adat.url, 
-                      kapcsoltAdat: adat.kapcsoltAdat,
-                    })}
-                  />
+    <tr style={{ display: lathatosag }}>
+      {Object.keys(objektum).map((key) => {
+        const adat = props.adatok[key];
+        if (adat && adat.lathato) {
+          const InputComponent = inputComponentMap[adat.tipus];
+          const ertek = objektum[key];
+  
+          return (
+            <Fragment key={key}>
+              <td>
+                {sorModosithato && adat.modosithato ? (
+                  <>
+                    {InputComponent && (
+                      <InputComponent
+                        name={key}
+                        objektum={ertek}
+                        esemeny={ertek_modositas}
+                        {...(adat.tipus === "selectQuery" && {
+                          kapcsoltAdat: adat.kapcsoltAdat,
+                          esemeny: ertek_modositas,
+                        })}
+                      />
+                    )}
+                    <FormError errors={errors} fieldName={key} />
+                  </>
+                ) : (
+                  <>
+                    {adat.tipus === "selectQuery" ? (
+                      <AdminInputSelectQuery
+                        name={key}
+                        objektum={ertek}
+                        url={adat.url}
+                        kapcsoltAdat={adat.kapcsoltAdat}
+                        readOnly={true} // Csak olvasható
+                      />
+                    ) : (
+                      <span>{ertek ?? ""}</span>
+                    )}
+                  </>
                 )}
-                <FormError errors={errors} fieldName={key} />
-              </>
-            ) : (
-              <span>{ertek ?? ""}</span>
-            )}
-          </td>
-        </Fragment>
-      );
-    }
-    return null;
-  })}
-
-  <td>
-    {sorModosithato ? (
-      <Button className="btn-sm" variant="outline-success" onClick={mentes}>Mentés</Button>
-    ) : (
-      <Button className="btn-sm" variant="outline-success" onClick={modosithatova_allitas}>Módosítás</Button>
-    )}
-  </td>
-  <td>
-    {sorModosithato ? (
-      <Button className="btn-sm" variant="outline-danger" onClick={megse}>Mégse</Button>
-    ) : (
-      <Button className="btn-sm" variant="outline-secondary" onClick={torles} disabled>
-        <i className="bi bi-lock-fill"></i> Törlés
-      </Button>
-    )}
-  </td>
-</tr>
-
+              </td>
+            </Fragment>
+          );
+        }
+        return null;
+      })}
+  
+      <td>
+        {sorModosithato ? (
+          <Button className="btn-sm" variant="outline-success" onClick={mentes}>
+            Mentés
+          </Button>
+        ) : (
+          <Button
+            className="btn-sm"
+            variant="outline-success"
+            onClick={modosithatova_allitas}
+          >
+            Módosítás
+          </Button>
+        )}
+      </td>
+      <td>
+        {sorModosithato ? (
+          <Button className="btn-sm" variant="outline-danger" onClick={megse}>
+            Mégse
+          </Button>
+        ) : (
+          <Button
+            className="btn-sm"
+            variant="outline-secondary"
+            onClick={torles}
+            disabled
+          >
+            <i className="bi bi-lock-fill"></i> Törlés
+          </Button>
+        )}
+      </td>
+    </tr>
   );
-}
+}  

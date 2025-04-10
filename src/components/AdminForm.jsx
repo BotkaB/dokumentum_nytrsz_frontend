@@ -168,7 +168,6 @@ export default function AdminForm(props) {
                             objektum={objektum[key]}
                             esemeny={ertek_modositas}
                             {...(props.adatok[key].tipus === "selectQuery" && {
-                              url: props.adatok[key].url, 
                               kapcsoltAdat: props.adatok[key].kapcsoltAdat,
                             })}
                             readOnly={false}

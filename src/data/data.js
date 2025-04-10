@@ -250,17 +250,16 @@ const lista = [
         },
         ugyfel_fotipus: {
           tipus: "selectQuery",
+          kapcsoltAdat: [
+            {
+              ertekMezo: "ugyfel_fotipus",
+              szovegMezo: "elnevezes",
+            },
+          ],
           modosithato: true,
           kotelezo: false,
           fejlec: "főtípus",
           lathato: true,
-          url: "api/ugyfel_tipuses", 
-          kapcsoltAdat: [
-            {
-              ertekMezo: "ugyfel_fotipus_id",
-              szovegMezo: "ugyfel_fotipus",
-            },
-          ],
         },
 
         elnevezes: {
@@ -326,7 +325,13 @@ const lista = [
           lathato: false,
         },
         intezet: {
-          tipus: "text",
+          tipus: "selectQuery",
+          kapcsoltAdat: [
+            {
+              ertekMezo: "megvalositasi_helyszin_id",
+              szovegMezo: "nev",
+            },
+          ],
           modosithato: true,
           kotelezo: false,
           fejlec: "intézet",
@@ -468,11 +473,10 @@ const lista = [
 
         elszamolas_tipus_id: {
           tipus: "selectQuery",
-          url: "api/elszamolas_tipuses", 
           kapcsoltAdat: [
             {
               ertekMezo: "elszamolas_tipus_id",  
-              szovegMezo: "elszamolas_elnevezese", 
+              szovegMezo: ["elszamolas_tipus","elszamolas_elnevezese"] 
             },
           ],
           modosithato: true,
@@ -538,11 +542,10 @@ const lista = [
     
         ugyfel_tipus_id: {
           tipus: "selectQuery",
-          url: "api/ugyfel_tipuses", 
           kapcsoltAdat: [
             {
-              ertekMezo: "ugyfel_fotipus",
-              szovegMezo: "elnevezes",
+              ertekMezo: "ugyfel_tipus_id",
+              szovegMezo: ["ugyfel_tipus","elnevezes"]
             },
           ],
           modosithato: true,
@@ -553,11 +556,10 @@ const lista = [
     
         dokumentum_tipus_id: {
           tipus: "selectQuery",
-          url: "api/dokumentum_tipuses", 
           kapcsoltAdat: [
             {
               ertekMezo: "dokumentum_tipus_id",
-              szovegMezo: "dokumentum_neve",
+              szovegMezo: ["dokumentum_tipus", "dokumentum_neve"]
             },
           ],
           modosithato: true,

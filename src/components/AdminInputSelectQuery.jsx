@@ -1,65 +1,76 @@
 import { useEffect, useState } from "react";
-import { myAxios } from "../api/axios";
+import useAdatContext from "../contexts/AdatContext";
 
-const AdminInputSelectQuery = ({ url, kapcsoltAdat, esemeny, name, objektum, readOnly }) => {
+// Funkció a beágyazott objektumok értékeinek lekérésére
+const getNestedValue = (obj, path) => {
+  return path.reduce((acc, key) => (acc && acc[key] !== undefined) ? acc[key] : null, obj);
+};
+
+export default function AdminInputSelectQuery({
+  kapcsoltAdat,
+  esemeny,
+  name,
+  objektum,
+  readOnly
+}) {
   const [options, setOptions] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [selectedValue, setSelectedValue] = useState(objektum ?? "");
+  const { objLista } = useAdatContext();
+
+  console.log("Kapcsolt Adat:", kapcsoltAdat);  // Naplózzuk a kapcsoltAdat tartalmát
+  console.log("ObjLista:", objLista);          // Naplózzuk a objLista tartalmát
+
 
   useEffect(() => {
-    if (!url || !kapcsoltAdat || kapcsoltAdat.length === 0) return;
+    if (!objLista || objLista.length === 0 || !kapcsoltAdat || kapcsoltAdat.length === 0) return;
 
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const response = await myAxios.get(url);
-        const fetchedData = Array.isArray(response.data)
-      ? response.data
-      : Array.isArray(response.data.data)
-      ? response.data.data
-      : [];
+    // Módosított adatlekérdezés a szűrt lista alapján
+    const mappedOptions = objLista.map((item) => {
+      const option = {};
 
-        // Módosított adatlekérdezés a kulcsok alapján
-        const mappedOptions = fetchedData.map((item) => {
-          const option = {};
+      // Ellenőrizzük, hogy az adat tömb vagy objektum
+      const data = Array.isArray(item) ? item : (item.data || item);
+      console.log("Adat:", data);
+      // Töltse fel az opciókat a dinamikus mezők alapján
+      if (kapcsoltAdat[0]?.ertekMezo && kapcsoltAdat[0]?.szovegMezo) {
 
-          // Töltse fel az opciókat az 'ertekMezo' és 'szovegMezo' alapján
-          if (kapcsoltAdat[0]?.ertekMezo && kapcsoltAdat[0]?.szovegMezo) {
-            option.value = item[kapcsoltAdat[0].ertekMezo];
-            option.label = item[kapcsoltAdat[0].szovegMezo];
-          }
+        console.log(kapcsoltAdat[0]?.ertekMezo);
+        console.log(kapcsoltAdat[0]?.szovegMezo);
+        // Használja a getNestedValue függvényt a beágyazott adatmezők elérésére
+        const ertekMezoValue = getNestedValue(data, [kapcsoltAdat[0].ertekMezo]);
+        const szovegMezoValue = Array.isArray(kapcsoltAdat[0].szovegMezo)
+          ? getNestedValue(data, kapcsoltAdat[0].szovegMezo)
+          : data[kapcsoltAdat[0].szovegMezo];
 
-          return option;
-        });
 
-        const uniqueOptions = mappedOptions.filter(
-          (option, index, self) =>
-            index === self.findIndex((o) => o.value === option.value)
-        );
-        
-        setOptions(uniqueOptions);
+        console.log("Érték Mező:", ertekMezoValue);
 
-      } catch (error) {
-        console.error("Hiba az adatok lekérésekor:", error);
-      } finally {
-        setLoading(false);
+
+        option.value = ertekMezoValue;
+        option.label = szovegMezoValue;
       }
-    };
 
-    fetchData();
-  }, [url, kapcsoltAdat]);
+      return option;
+    });
 
-  
+
+    const uniqueOptions = mappedOptions.filter(
+      (option, index, self) =>
+        option.value != null &&
+        index === self.findIndex((o) => o.value != null && o.value === option.value)
+    );
+
+    setOptions(uniqueOptions);
+  }, [objLista, kapcsoltAdat]);
+
   useEffect(() => {
     setSelectedValue(objektum ?? "");
   }, [objektum]);
-  
+
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
     esemeny(event);
   };
-
-
 
   return (
     <select
@@ -68,12 +79,10 @@ const AdminInputSelectQuery = ({ url, kapcsoltAdat, esemeny, name, objektum, rea
       onChange={handleChange}
       disabled={readOnly}
     >
-
       {!selectedValue && <option value="">-- Válassz egyet --</option>}
-      {loading ? (
-        <option>Betöltés...</option>
+      {options.length === 0 ? (
+        <option>Nem található adat</option>
       ) : (
-
         options.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}
@@ -82,6 +91,4 @@ const AdminInputSelectQuery = ({ url, kapcsoltAdat, esemeny, name, objektum, rea
       )}
     </select>
   );
-};
-
-export default AdminInputSelectQuery;
+}

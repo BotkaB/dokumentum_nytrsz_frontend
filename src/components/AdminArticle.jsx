@@ -11,19 +11,26 @@ export default function AdminArticle(props) {
   const { objLista, loading, adatlekeres, tabla, valtoztatasTabla } = useAdatContext();
   const [filteredObjLista, setFilteredObjLista] = useState(objLista || []); // Kezdetben az objLista vagy üres tömb
 
+  // Logoljuk az objLista-t csak ha változik
   useEffect(() => {
-    console.log("Aktív tábla:", props.tabla);
+    console.log("objLista frissítve:", objLista);
+  }, [objLista]);
+
+  // Aktív tábla változása
+  useEffect(() => {
+    console.log("Aktív tábla változás:", props.tabla);
     if (props.tabla) {
       valtoztatasTabla(props.tabla);
     }
-  }, [props.tabla]);
+  }, [props.tabla, valtoztatasTabla]); // figyeljünk a valtoztatasTabla-ra is
 
+  // Adatok lekérése a táblához
   useEffect(() => {
-    if (tabla) {
+    // Csak akkor kérjünk új adatokat, ha az objLista üres vagy a tábla változott
+    if (tabla && objLista.length === 0) {
       adatlekeres();
     }
-  }, [tabla]);
-
+  }, [tabla, objLista]); 
   // Automatikus frissítés a lista változásakor
   useEffect(() => {
     setFilteredObjLista(objLista);  // Ha az objLista frissül, frissítjük a filteredObjLista-t
@@ -34,14 +41,28 @@ export default function AdminArticle(props) {
     if (!searchTerm) {
       setFilteredObjLista(objLista); // Ha nincs keresési kifejezés, az eredeti lista
     } else {
-      const filtered = objLista.filter(item =>
-        Object.values(item).some(value =>
+      const filtered = objLista.filter(item => {
+        // Szűrés az objektum alapadatai szerint
+        const matchesBasicData = Object.values(item).some(value =>
           value && value.toString().toLowerCase().includes(searchTerm.toLowerCase())
-        )
-      );
+        );
+        
+        // Szűrés a kapcsolt adatok szerint
+        const matchesKapcsoltAdatok = Object.values(item.kapcsoltAdatok || []).some(kapcsoltItem =>
+          kapcsoltItem?.szovegMezo?.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        
+        return matchesBasicData || matchesKapcsoltAdatok; // Visszaadjuk azokat, amelyek egyeznek
+      });
       setFilteredObjLista(filtered); // A szűrt lista beállítása
     }
   };
+  
+
+  // Logoljuk a szűrt listát a keresés után
+  useEffect(() => {
+    console.log("Szűrt lista:", filteredObjLista);
+  }, [filteredObjLista]);
 
   const tablaElnevezes = tabla ? tabla.elnevezes || "Betöltés..." : "Betöltés...";
 

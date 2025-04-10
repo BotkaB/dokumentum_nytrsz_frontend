@@ -1,73 +1,38 @@
-import { useEffect, useState } from "react";
-import { myAxios } from "../api/axios";
+import { useState, useEffect } from "react";
+import { Form } from "react-bootstrap";
+import useAdatContext from "../contexts/AdatContext";
 
-const AdminInputSelectQuery = ({ url, kapcsoltAdat, esemeny, name, objektum, readOnly }) => {
+const AdminInputSelectQuery = ({ name, objektum, esemeny }) => {
+  const { objLista } = useAdatContext();
   const [options, setOptions] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [selectedValue, setSelectedValue] = useState(objektum);
 
   useEffect(() => {
-    if (!url || !kapcsoltAdat || kapcsoltAdat.length === 0) return;
-
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const response = await myAxios.get(url);
-        const fetchedData = response.data;
-
-        // Módosított adatlekérdezés a kulcsok alapján
-        const mappedOptions = fetchedData.map((item) => {
-          const option = {};
-
-          // Töltse fel az opciókat az 'ertekMezo' és 'szovegMezo' alapján
-          if (kapcsoltAdat[0]?.ertekMezo && kapcsoltAdat[0]?.szovegMezo) {
-            option.value = item[kapcsoltAdat[0].ertekMezo];
-            option.label = item[kapcsoltAdat[0].szovegMezo];
-          }
-
-          // Ha több kulcsot szeretnénk kezelni
-          if (kapcsoltAdat[0]?.kulcsok && kapcsoltAdat[0].kulcsok.length > 0) {
-            kapcsoltAdat[0].kulcsok.forEach((key) => {
-              option[key] = item[key];
-            });
-          }
-
-          return option;
-        });
-
-        setOptions(mappedOptions);
-      } catch (error) {
-        console.error("Hiba az adatok lekérésekor:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [url, kapcsoltAdat]);
-
-  const handleChange = (event) => {
-    setSelectedValue(event.target.value);
-    esemeny(event);
-  };
+    // A kapcsolt adatok dinamikusan generálása a kapcsolódó objektumokból
+    const mappedOptions = objLista.map((item) => ({
+      value: item.elszamolas_tipus_id, // Az értékmező, például az azonosító
+      label: item.elszamolas_tipus?.elszamolas_elnevezese, // A szövegmező
+    }));
+    
+    setOptions(mappedOptions);
+  }, [objLista]);
 
   return (
-    <select
-      name={name}
-      value={selectedValue}
-      onChange={handleChange}
-      disabled={readOnly}
-    >
-      {loading ? (
-        <option>Betöltés...</option>
-      ) : (
-        options.map((option) => (
+    <Form.Group controlId={name}>
+      <Form.Label>{name}</Form.Label>
+      <Form.Control
+        as="select"
+        name={name}
+        value={objektum}
+        onChange={esemeny}
+      >
+        <option value="">Válasszon...</option>
+        {options.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}
           </option>
-        ))
-      )}
-    </select>
+        ))}
+      </Form.Control>
+    </Form.Group>
   );
 };
 

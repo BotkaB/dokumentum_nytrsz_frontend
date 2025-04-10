@@ -11,6 +11,7 @@ import AdminInputSelectQuery from "./AdminInputSelectQuery";
 import AdminInputPassword from "./AdminInputPassword";
 import FormError from "./FormError";
 import { notify } from './NotificationService';
+import useAdatContext from "../contexts/AdatContext";
 
 // CSRF token kezeléshez szükséges függvény
 const csrf = async () => {
@@ -22,18 +23,18 @@ const csrf = async () => {
 };
 
 export default function AdminForm(props) {
-  const [objektum, setObjektum] = useState(props.alapObj);
+  const { objLista, adatlekeres, valtoztatasTabla } = useAdatContext();
+  const [objektum, setObjektum] = useState(props.alapObj || {});  // Ha alapObj nincs, akkor üres objektum
   const [errors, setErrors] = useState({}); // Hibák állapota
 
   // A mezők változásainak figyelése
   function ertek_modositas(event) {
     setObjektum({ ...objektum, [event.target.name]: event.target.value });
-    console.log(objektum);
   }
 
   useEffect(() => {
-    setObjektum(props.alapObj);
-  }, [props]);
+    setObjektum(props.alapObj); // Frissíti az objektumot az alapObj változásakor
+  }, [props.alapObj]);
 
   // Form elküldése
   function elkuld(event) {
@@ -51,10 +52,9 @@ export default function AdminForm(props) {
         _token: await csrf(), // A CSRF token
       });
       console.log(response);
-      props.frissites();
+      adatlekeres(); // Adatok frissítése
       setErrors({});
       notify("success", "A felvitel sikeresen megtörtént!");
-
     } catch (error) {
       console.error(error);
       if (error.response && error.response.data.errors) {
@@ -70,20 +70,18 @@ export default function AdminForm(props) {
       className="admin-form"
       onSubmit={elkuld}
       method="post"
-
     >
       <Container>
         <Row className="form-row">
-
           {Object.keys(props.adatok).map(function (key, index) {
             return (
               <Fragment key={index}>
                 {props.adatok[key].modosithato && (
                   <Col xs="12" sm="6" md="4" lg="3" xl="3">
                     <div className="form-group">
-                      <label className="form-group-label"
-
-                        htmlFor={"admin_form_" + key} // Hozzáadva az id-nek megfelelő for
+                      <label
+                        className="form-group-label"
+                        htmlFor={"admin_form_" + key}
                       >
                         {props.adatok[key].fejlec}:
                       </label>
@@ -91,7 +89,7 @@ export default function AdminForm(props) {
                         {props.adatok[key].tipus === "text" && (
                           <AdminInputText
                             name={key}
-                            id={"admin_form_" + key} // id hozzáadása
+                            id={"admin_form_" + key}
                             regex={props.adatok[key].regex}
                             objektum={objektum[key]}
                             esemeny={ertek_modositas}
@@ -102,7 +100,7 @@ export default function AdminForm(props) {
                         {props.adatok[key].tipus === "password" && (
                           <AdminInputPassword
                             name={key}
-                            id={"admin_form_" + key} // id hozzáadása
+                            id={"admin_form_" + key}
                             objektum={objektum[key]}
                             esemeny={ertek_modositas}
                             readOnly={false}
@@ -112,7 +110,7 @@ export default function AdminForm(props) {
                         {props.adatok[key].tipus === "email" && (
                           <AdminInputEmail
                             name={key}
-                            id={"admin_form_" + key} // id hozzáadása
+                            id={"admin_form_" + key}
                             regex={props.adatok[key].regex}
                             objektum={objektum[key]}
                             esemeny={ertek_modositas}
@@ -123,7 +121,7 @@ export default function AdminForm(props) {
                         {props.adatok[key].tipus === "number" && (
                           <AdminInputNumber
                             name={key}
-                            id={"admin_form_" + key} // id hozzáadása
+                            id={"admin_form_" + key}
                             min={props.adatok[key].min}
                             max={props.adatok[key].max}
                             objektum={objektum[key]}
@@ -135,7 +133,7 @@ export default function AdminForm(props) {
                         {props.adatok[key].tipus === "date" && (
                           <AdminInputDate
                             name={key}
-                            id={"admin_form_" + key} // id hozzáadása
+                            id={"admin_form_" + key}
                             objektum={objektum[key]}
                             esemeny={ertek_modositas}
                             readOnly={false}
@@ -145,7 +143,7 @@ export default function AdminForm(props) {
                         {props.adatok[key].tipus === "datetime" && (
                           <AdminInputDateTime
                             name={key}
-                            id={"admin_form_" + key} // id hozzáadása
+                            id={"admin_form_" + key}
                             objektum={objektum[key]}
                             esemeny={ertek_modositas}
                             readOnly={false}
@@ -155,7 +153,7 @@ export default function AdminForm(props) {
                         {props.adatok[key].tipus === "select" && (
                           <AdminInputSelect
                             name={key}
-                            id={"admin_form_" + key} // id hozzáadása
+                            id={"admin_form_" + key}
                             objektum={objektum[key]}
                             esemeny={ertek_modositas}
                             lista={props.adatok[key].lista}
@@ -166,17 +164,15 @@ export default function AdminForm(props) {
                         {props.adatok[key].tipus === "selectQuery" && (
                           <AdminInputSelectQuery
                             name={key}
-                            id={"admin_form_" + key} 
+                            id={"admin_form_" + key}
                             objektum={objektum[key]}
                             esemeny={ertek_modositas}
                             {...(props.adatok[key].tipus === "selectQuery" && {
-                              url: props.adatok[key].url, 
-                              kapcsoltAdat: props.adatok[key].kapcsoltAdat, 
+                              kapcsoltAdat: props.adatok[key].kapcsoltAdat,
                             })}
-                            readOnly={false} 
+                            readOnly={false}
                           />
                         )}
-
                       </>
                       {/* Hibák megjelenítése */}
                       <FormError errors={errors} fieldName={key} />

@@ -10,7 +10,7 @@ import AdminInputSelect from "./AdminInputSelect";
 import AdminInputSelectQuery from "./AdminInputSelectQuery";
 import AdminInputPassword from "./AdminInputPassword";
 import useAdatContext from "../contexts/AdatContext";
-import FormError from "./FormError";  // Importálás a hibakezeléshez
+import FormError from "./FormError"; 
 import 'react-toastify/dist/ReactToastify.css';
 import { notify } from './NotificationService';
 
@@ -102,53 +102,57 @@ export default function TablaSor(props) {
   };
 
   return (
-    <tr style={{ display: lathatosag }}>
-      {Object.keys(objektum).map((key) => {
-        const adat = props.adatok[key];
-        if (adat && adat.lathato) {
-          const InputComponent = inputComponentMap[adat.tipus];
-          return (
-            <Fragment key={key}>
-              <td>
+<tr style={{ display: lathatosag }}>
+  {Object.keys(objektum).map((key) => {
+    const adat = props.adatok[key];
+    if (adat && adat.lathato) {
+      const InputComponent = inputComponentMap[adat.tipus];
+      const ertek = objektum[key];
+
+      return (
+        <Fragment key={key}>
+          <td>
+            {sorModosithato && adat.modosithato ? (
+              <>
                 {InputComponent && (
-                  <Fragment>
-                    <InputComponent
-                      name={key}
-                      objektum={objektum[key]}
-                      esemeny={ertek_modositas}
-                      readOnly={!(sorModosithato && adat.modosithato)}
-                      {...(adat.tipus === "selectQuery" && {
-                        url: adat.url, 
-                        kapcsoltAdat: adat.kapcsoltAdat,
-                      })}
-                      
-                    />
-                    {/* Hibakezelés megjelenítése */}
-                    <FormError errors={errors} fieldName={key} />
-                  </Fragment>
+                  <InputComponent
+                    name={key}
+                    objektum={ertek}
+                    esemeny={ertek_modositas}
+                    {...(adat.tipus === "selectQuery" && {
+                      kapcsoltAdat: adat.kapcsoltAdat,
+                    })}
+                  />
                 )}
-              </td>
-            </Fragment>
-          );
-        }
-        return null;
-      })}
-      <td>
-        {sorModosithato ? (
-          <Button variant="outline-success" onClick={mentes}>Mentés</Button>
-        ) : (
-          <Button variant="outline-success" onClick={modosithatova_allitas}>Módosítás</Button>
-        )}
-      </td>
-      <td>
-        {sorModosithato ? (
-          <Button variant="outline-danger" onClick={megse}>Mégse</Button>
-        ) : (
-          <Button variant="outline-secondary" onClick={torles} disabled>
-            <i className="bi bi-lock-fill"></i> Törlés
-          </Button>
-        )}
-      </td>
-    </tr>
+                <FormError errors={errors} fieldName={key} />
+              </>
+            ) : (
+              <span>{ertek ?? ""}</span>
+            )}
+          </td>
+        </Fragment>
+      );
+    }
+    return null;
+  })}
+
+  <td>
+    {sorModosithato ? (
+      <Button className="btn-sm" variant="outline-success" onClick={mentes}>Mentés</Button>
+    ) : (
+      <Button className="btn-sm" variant="outline-success" onClick={modosithatova_allitas}>Módosítás</Button>
+    )}
+  </td>
+  <td>
+    {sorModosithato ? (
+      <Button className="btn-sm" variant="outline-danger" onClick={megse}>Mégse</Button>
+    ) : (
+      <Button className="btn-sm" variant="outline-secondary" onClick={torles} disabled>
+        <i className="bi bi-lock-fill"></i> Törlés
+      </Button>
+    )}
+  </td>
+</tr>
+
   );
 }

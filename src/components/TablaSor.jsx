@@ -46,12 +46,14 @@ export default function TablaSor(props) {
     setObjektum(props.obj);
     setRegiObjektum(props.obj);
     setSorModosithato(false);
-    setLathatosag("");
-  }, [props]);
+    setLathatosag("");   
+  }, [props.obj]);
 
   const modosithatova_allitas = () => {
     setRegiObjektum(objektum);
     setSorModosithato(true);
+    props.setVanModositasAlatt(true);
+    props.setModositandoSorId(props.obj[props.adatok.elsodleges_kulcs[0]]);
   };
 
   const ertek_modositas = (event) => {
@@ -68,6 +70,7 @@ export default function TablaSor(props) {
       // Ha sikeres válasz érkezik
       if (response && response.status === 200) {
         setSorModosithato(false);
+        props.setVanModositasAlatt(false);
         adatlekeres();
         setErrors({});
         notify("success", "A módosítás sikeresen megtörtént!");
@@ -88,18 +91,11 @@ export default function TablaSor(props) {
   const megse = () => {
     setObjektum(regiObjektum);
     setSorModosithato(false);
+    props.setVanModositasAlatt(false);
+    props.setModositandoSorId(null);
     setErrors({});
   };
 
-  const torles = async () => {
-    const torlendoId = sorIdGeneralas();
-    try {
-      await myAxios.delete(`${props.apik.destroyUrl}/${torlendoId}`);
-      setLathatosag("none");
-    } catch (error) {
-      console.error("Törlés sikertelen:", error);
-    }
-  };
 
   return (
     <tr style={{ display: lathatosag }}>
@@ -170,14 +166,7 @@ export default function TablaSor(props) {
             Mégse
           </Button>
         ) : (
-          <Button
-            className="btn-sm"
-            variant="outline-secondary"
-            onClick={torles}
-            disabled
-          >
-            <i className="bi bi-lock-fill"></i> Törlés
-          </Button>
+          <></>
         )}
       </td>
     </tr>

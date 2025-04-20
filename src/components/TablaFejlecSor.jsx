@@ -1,4 +1,4 @@
-export default function TablaFejlecSor({ adatok }) {
+export default function TablaFejlecSor({ adatok, vanModositasAlatt }) {
   return (
     <tr>
       {Object.entries(adatok).map(([key, value]) => {
@@ -7,8 +7,8 @@ export default function TablaFejlecSor({ adatok }) {
           <th key={key}>{value.fejlec}</th>
         );
       })}
-      <th key="modositas">módosítás</th>
-      <th key="torles">törlés</th>
+      <th key="modositas"> módosítás</th>
+      {vanModositasAlatt && <th key="megse">mégse</th>}
     </tr>
   );
 }

@@ -10,7 +10,7 @@ import AdminInputSelect from "./AdminInputSelect";
 import AdminInputSelectQuery from "./AdminInputSelectQuery";
 import AdminInputPassword from "./AdminInputPassword";
 import useAdatContext from "../contexts/AdatContext";
-import FormError from "./FormError"; 
+import FormError from "./FormError";
 import 'react-toastify/dist/ReactToastify.css';
 import { notify } from './NotificationService';
 
@@ -46,7 +46,7 @@ export default function TablaSor(props) {
     setObjektum(props.obj);
     setRegiObjektum(props.obj);
     setSorModosithato(false);
-    setLathatosag("");   
+    setLathatosag("");
   }, [props.obj]);
 
   const modosithatova_allitas = () => {
@@ -66,7 +66,7 @@ export default function TablaSor(props) {
     try {
       // API hívás és válasz
       const response = await myAxios.put(`${props.apik.updateUrl}/${modositottId}`, objektum);
-  
+
       // Ha sikeres válasz érkezik
       if (response && response.status === 200) {
         setSorModosithato(false);
@@ -86,7 +86,7 @@ export default function TablaSor(props) {
       setObjektum(regiObjektum);
     }
   };
-  
+
 
   const megse = () => {
     setObjektum(regiObjektum);
@@ -104,7 +104,7 @@ export default function TablaSor(props) {
         if (adat && adat.lathato) {
           const InputComponent = inputComponentMap[adat.tipus];
           const ertek = objektum[key];
-  
+
           return (
             <Fragment key={key}>
               <td>
@@ -144,7 +144,7 @@ export default function TablaSor(props) {
         }
         return null;
       })}
-  
+
       <td>
         {sorModosithato ? (
           <Button className="btn-sm" variant="outline-success" onClick={mentes}>
@@ -160,15 +160,14 @@ export default function TablaSor(props) {
           </Button>
         )}
       </td>
-      <td>
-        {sorModosithato ? (
+      {sorModosithato && (
+        <td>
           <Button className="btn-sm" variant="outline-danger" onClick={megse}>
             Mégse
           </Button>
-        ) : (
-          <></>
-        )}
-      </td>
+        </td>
+      )}
+
     </tr>
   );
 }  

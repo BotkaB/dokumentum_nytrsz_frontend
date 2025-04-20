@@ -62,6 +62,7 @@ useEffect(() => {
   const loginReg = async ({ ...adat }, vegpont) => {
     await csrf();
     console.log(adat, vegpont);
+    setErrors({});
 
     try {
       const response = await myAxios.post(vegpont, adat);

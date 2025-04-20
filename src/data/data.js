@@ -39,12 +39,11 @@ const lista = [
         },
 
         role: {
-          tipus: "number",
+          tipus: "select",
           modosithato: true,
           kotelezo: true,
           alapertek: "",
-          min: 0,
-          max: 3,
+          lista: [0,1,2,3],
           fejlec: "role",
           lathato: true,
         },

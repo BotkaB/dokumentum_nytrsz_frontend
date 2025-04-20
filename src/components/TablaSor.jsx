@@ -115,6 +115,7 @@ export default function TablaSor(props) {
                         name={key}
                         objektum={ertek}
                         esemeny={ertek_modositas}
+                        {...(adat.tipus === "select" && { lista: adat.lista })}
                         {...(adat.tipus === "selectQuery" && {
                           kapcsoltAdat: adat.kapcsoltAdat,
                           esemeny: ertek_modositas,
@@ -133,7 +134,15 @@ export default function TablaSor(props) {
                         kapcsoltAdat={adat.kapcsoltAdat}
                         readOnly={true} // Csak olvasható
                       />
-                    ) : (
+                    ): adat.tipus === "select" ? (
+                      <AdminInputSelect
+                        name={key}
+                        objektum={ertek}
+                        lista={adat.lista}
+                        readOnly={true} // Csak olvasható
+                      />
+                    
+                    ): (
                       <span>{ertek ?? ""}</span>
                     )}
                   </>

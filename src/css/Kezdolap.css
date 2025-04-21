@@ -1,0 +1,40 @@
+.kezdolap {
+    background-image: url("/Kezdooldal_hatterkep.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 25.8vh;
+  }
+  
+  .user-info {
+    margin: 0.1rem 0 0 0;
+    padding-left: 1.5rem;
+    font-size: 1.9rem;
+  }
+
+  .user-info {
+    margin: 0.18rem 0 0 0;
+    padding-left: 1.7rem; 
+    font-size: 1.9rem;
+  }
+  
+  @media (max-width: 768px) {
+    .user-info {
+      font-size: 1.4rem; 
+      padding-left: 1.5rem; 
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .user-info {
+      font-size: 1.0rem;
+      padding-left: 1.3rem; 
+    }
+  }
+  
+  

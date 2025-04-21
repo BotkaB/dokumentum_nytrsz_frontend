@@ -1,7 +1,20 @@
+export default function FormError({ errors, fieldName = null }) {
+  if (!errors) return null;
 
-import React from 'react';
+  // Ha mezőhöz tartozó hiba van
+  if (fieldName && errors[fieldName]) {
+    return <p style={{ color: 'red' }}>{errors[fieldName][0]}</p>;
+  }
 
-export default function FormError({ errors, fieldName }) {
-  if (!errors || !errors[fieldName]) return null;
-  return <p style={{ color: 'red' }}>{errors[fieldName][0]}</p>;
+  // Ha általános üzenet van (message kulcs alatt)
+  if (!fieldName && errors.message) {
+    const uzenet = Array.isArray(errors.message)
+      ? errors.message[0]
+      : errors.message;
+
+    return <p style={{ color: 'red' }}>{uzenet}</p>;
+  }
+
+  return null;
 }
+

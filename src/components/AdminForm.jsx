@@ -60,8 +60,8 @@ export default function AdminForm(props) {
       if (error.response && error.response.data.errors) {
         // Ha validációs hiba van, akkor azokat beállítjuk
         setErrors(error.response.data.errors);
-      }
-      notify("error", "A felvitel sikertelen volt. Kérjük próbálja újra.");
+      }else{
+      notify("error", "A felvitel sikertelen volt. Kérjük próbálja újra.");}
     }
   }
 

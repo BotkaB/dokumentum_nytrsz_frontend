@@ -74,7 +74,7 @@ export default function TablaSor(props) {
         adatlekeres();
         setErrors({});
         notify("success", "A módosítás sikeresen megtörtént!");
-        console.error("Mentés sikeres");
+        console.log("Mentés sikeres");
       }
     } catch (error) {
       // Ha validációs hiba van

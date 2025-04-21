@@ -12,7 +12,7 @@ export const ValidationProvider = ({ children }) => {
             errors.email = ["Az email üres vagy nem megfelelő formátumú."]
         }
         if (data.password.length < 8 || data.password.length > 16) {
-            errors.password = ["A jelszó 8 és 16 karakter közötti kell legyen."]
+            errors.password = ["A jelszó minimum 8 karakter."]
         }
         setValidationErrors(errors)
         return errors

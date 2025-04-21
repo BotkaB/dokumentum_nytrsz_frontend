@@ -6,15 +6,17 @@
 
 
 .admin-article h2 {
-  margin-bottom: 20px;
-  margin-left: 20px; 
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  margin-left: 1rem; 
   font-size: 1.8rem; 
   font-weight: 600; 
   color: #333; 
 }
 
 .admin-container {
-  width: 100%; 
+  width: 100%;
+
 }
 
 .admin-form {
@@ -49,7 +51,7 @@
 .admin-form input,
 .admin-form select {
   width: 100%;
-  max-width: 40rem;
+  max-width: 60rem;
   padding: 0.5rem; 
   font-size: 1rem; 
   border: 0.3rem solid #d7d4d4; 
@@ -69,10 +71,13 @@
 }
 
 .admin-table {
+  margin: 0 auto;
   align-self: center;
-  width: 100%;
+  width: auto;
   margin-top: 1rem;
-  table-layout: auto; 
+  table-layout: auto;
+  max-width: 90%;
+  margin-bottom: 2rem; 
 }
 
 .admin-table td, 
@@ -87,13 +92,13 @@
 
 .admin-table input,
 .admin-table select {
-  width: auto; 
+  width: 100%; 
   max-width: 100%; 
   font-size: 1rem;
   border: 0.2rem solid #d7d4d4;
   border-radius: 4px;
   box-sizing: border-box;
-   min-width: 10rem; 
+  min-width: 10rem; 
 }
 
 
@@ -125,6 +130,28 @@
       white-space: nowrap; /* Ne törje a szöveget szélesebb képernyőkön */
     }
   }
+
+  @media (max-width: 768px) {
+    .scroll-text p {
+      animation-duration: 25s;
+      font-size: calc(0.8rem + 0.4vw);
+    }
+    .admin-article h2 {
+        font-size: calc(0.6rem + 1vw);
+      }
+  }
+  
+  @media (max-width: 480px) {
+    .scroll-text p {
+      animation-duration: 35s;
+      font-size: calc(0.6rem + 0.3vw);
+    }
+  
+    .admin-article h2 {
+      font-size: calc(0.5rem + 1vw);
+    }
+  }
+
 
  
   

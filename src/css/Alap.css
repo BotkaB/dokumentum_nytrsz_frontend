@@ -1,0 +1,86 @@
+@keyframes marquee {
+    0% { transform: translateX(250%); }
+    100% { transform: translateX(-150%); }
+  }
+  
+  .scroll-text p {
+    display: inline-block;
+    font-size: calc(0.8rem + 0.3vw);
+    font-style: normal;
+    animation: marquee 20s linear infinite;
+    position: relative;
+
+
+  }
+  
+  .scroll-text p.paused {
+    animation-play-state: paused;
+  }
+  
+  .scroll-text p.running {
+    animation-play-state: running;
+  }
+  
+  @media (max-width: 768px) {
+    .scroll-text p {
+      animation-duration: 25s;
+      font-size: calc(0.8rem + 0.4vw);
+    }
+    .header-h1 {
+      font-size: calc(0.9rem + 1vw);
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .scroll-text p {
+      animation-duration: 35s;
+      font-size: calc(0.6rem + 0.3vw);
+    }
+  
+    .header-h1 {
+      font-size: calc(0.8rem + 1vw);
+    }
+  }
+  
+  .header {
+    position: relative;
+    overflow: hidden;
+    background: #e0e0e0;
+    padding: 0.8rem;
+    width: 100%;
+    min-height: 7rem;
+    box-sizing: border-box;
+  }
+  
+  .header-h1 {
+    font-size: calc(1.5rem + 1vw);
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .scroll-text {
+    position: relative;
+    width: 100%;
+    height: auto;
+    white-space: nowrap;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    top: 0.2rem;
+  }
+
+  .footer {
+    background: #e0e0e0; /* Világos szürke háttérszín */
+    padding: 10px; /* Csökkentjük a paddinget */
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    height: 40px; /* Alacsonyabb magasság */
+  }
+  
+  .footer-h2 {
+    margin: 0; /* Ne legyen extra margó */
+  }
+  
+  

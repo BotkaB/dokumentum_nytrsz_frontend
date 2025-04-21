@@ -10,7 +10,7 @@ export default function AdminTabla(props) {
   const [vanModositasAlatt, setVanModositasAlatt] = useState(false); 
 
   return (
-    <Table striped className="admin-table align-middle">
+    <Table responsive striped className="admin-table align-middle">
       <thead>
         <TablaFejlecSor 
         adatok={props.adatok} 

@@ -22,6 +22,7 @@ export default function AdminInputSelectQuery({
 
 
   useEffect(() => {
+
     if (!objLista || objLista.length === 0 || !kapcsoltAdat || kapcsoltAdat.length === 0) return;
 
     // Módosított adatlekérdezés a szűrt lista alapján

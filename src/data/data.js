@@ -252,7 +252,7 @@ const lista = [
           kapcsoltAdat: [
             {
               ertekMezo: "ugyfel_fotipus",
-              szovegMezo: "elnevezes",
+              szovegMezo: "ugyfel_fotipus",
             },
           ],
           modosithato: true,
@@ -327,8 +327,8 @@ const lista = [
           tipus: "selectQuery",
           kapcsoltAdat: [
             {
-              ertekMezo: "megvalositasi_helyszin_id",
-              szovegMezo: "nev",
+              ertekMezo: "intezet",
+              szovegMezo: "intezet",
             },
           ],
           modosithato: true,
@@ -353,10 +353,11 @@ const lista = [
           lathato: true,
         },
         regio: {
-          tipus: "text",
+          tipus: "select",
           modosithato: true,
           kotelezo: false,
           alapertek: "",
+          lista: ["Budapest", "konvergencia"],
           fejlec: "régió",
           lathato: true,
         },

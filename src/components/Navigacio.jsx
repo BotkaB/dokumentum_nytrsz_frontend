@@ -7,7 +7,7 @@ import StatisztikaNav from './StatisztikaNav';
 import DokumentumNav from './DokumentumNav';
 import AdminNav from './AdminNav';
 
-function Navigacio() {
+export default function Navigacio() {
     const { user, logout } = useAuthContext();
 
     const getRoleBasedLinks = () => {
@@ -69,4 +69,4 @@ function Navigacio() {
     );
 }
 
-export default Navigacio;
+

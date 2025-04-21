@@ -57,11 +57,13 @@ export default function AdminForm(props) {
       notify("success", "A felvitel sikeresen megtörtént!");
     } catch (error) {
       console.error(error);
-      if (error.response && error.response.data.errors) {
-        // Ha validációs hiba van, akkor azokat beállítjuk
+      if (error.response?.data?.errors) {
         setErrors(error.response.data.errors);
-      }else{
-      notify("error", "A felvitel sikertelen volt. Kérjük próbálja újra.");}
+      } else if (error.response?.data?.message) {
+        notify("error", error.response.data.message); // <-- ez fogja megjeleníteni a toastban a backend üzenetet
+      } else {
+        notify("error", "A felvitel sikertelen volt. Kérjük próbálja újra.");
+      }
     }
   }
 

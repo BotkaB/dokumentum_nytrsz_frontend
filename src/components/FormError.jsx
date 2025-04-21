@@ -17,4 +17,3 @@ export default function FormError({ errors, fieldName = null }) {
 
   return null;
 }
-

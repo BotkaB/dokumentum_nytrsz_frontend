@@ -78,10 +78,12 @@ export default function TablaSor(props) {
       }
     } catch (error) {
       // Ha validációs hiba van
-      console.error("Mentés sikertelen:", error.response?.data || error);
-      if (error.response && error.response.data.errors) {
+      if (error.response?.data?.errors) {
         setErrors(error.response.data.errors);
-        notify("error", "A módosítás sikertelen volt. Kérjük próbálja újra.");
+      } else if (error.response?.data?.message) {
+        notify("error", error.response.data.message); // <-- ez fogja megjeleníteni a toastban a backend üzenetet
+      } else {
+        notify("error", "A felvitel sikertelen volt. Kérjük próbálja újra.");
       }
       setObjektum(regiObjektum);
     }

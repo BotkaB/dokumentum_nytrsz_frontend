@@ -237,7 +237,7 @@ const lista = [
           modosithato: false,
           kotelezo: true,
           fejlec: "azon",
-          lathato: false,
+          lathato: true,
         },
 
         ugyfel_fotipus_id: {
@@ -245,16 +245,17 @@ const lista = [
           modosithato: false,
           kotelezo: true,
           fejlec: "foazon",
-          lathato: false,
+          lathato: true,
         },
         ugyfel_fotipus: {
           tipus: "selectQuery",
           kapcsoltAdat: [
             {
-              ertekMezo: "ugyfel_fotipus",
-              szovegMezo: "ugyfel_fotipus",
+              ertekMezo: "ugyfel_tipus_id",
+              szovegMezo: "elnevezes" 
             },
           ],
+
           modosithato: true,
           kotelezo: false,
           fejlec: "főtípus",
@@ -414,7 +415,7 @@ const lista = [
           modosithato: false,
           kotelezo: true,
           fejlec: "azon",
-          lathato: false,
+          lathato: true,
         },
 
         elszamolas_elnevezese: {

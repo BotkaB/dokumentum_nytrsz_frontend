@@ -36,7 +36,7 @@ export default function TablaSor(props) {
   const sorIdGeneralas = () => {
     const kulcsok_lista = props.adatok.elsodleges_kulcs;
     if (kulcsok_lista.length > 1) {
-      let kompozit_kulcs = kulcsok_lista.map(kulcs => objektum[kulcs]).join("/");
+      let kompozit_kulcs = kulcsok_lista.map(kulcs => objektum[kulcs]).join("/"); 
       return kompozit_kulcs.replace(" ", "%20");
     }
     return objektum[kulcsok_lista[0]];
@@ -60,35 +60,28 @@ export default function TablaSor(props) {
     setObjektum({ ...objektum, [event.target.name]: event.target.value });
   };
 
-
   const mentes = async () => {
     const modositottId = sorIdGeneralas();
     try {
-      // API hívás és válasz
       const response = await myAxios.put(`${props.apik.updateUrl}/${modositottId}`, objektum);
-
-      // Ha sikeres válasz érkezik
       if (response && response.status === 200) {
         setSorModosithato(false);
         props.setVanModositasAlatt(false);
         adatlekeres();
         setErrors({});
         notify("success", "A módosítás sikeresen megtörtént!");
-        console.log("Mentés sikeres");
       }
     } catch (error) {
-      // Ha validációs hiba van
       if (error.response?.data?.errors) {
         setErrors(error.response.data.errors);
       } else if (error.response?.data?.message) {
-        notify("error", error.response.data.message); // <-- ez fogja megjeleníteni a toastban a backend üzenetet
+        notify("error", error.response.data.message);
       } else {
         notify("error", "A felvitel sikertelen volt. Kérjük próbálja újra.");
       }
       setObjektum(regiObjektum);
     }
   };
-
 
   const megse = () => {
     setObjektum(regiObjektum);
@@ -97,7 +90,6 @@ export default function TablaSor(props) {
     props.setModositandoSorId(null);
     setErrors({});
   };
-
 
   return (
     <tr style={{ display: lathatosag }}>
@@ -121,6 +113,7 @@ export default function TablaSor(props) {
                         {...(adat.tipus === "selectQuery" && {
                           kapcsoltAdat: adat.kapcsoltAdat,
                           esemeny: ertek_modositas,
+                          objLista: adat.objLista,
                         })}
                       />
                     )}
@@ -131,20 +124,19 @@ export default function TablaSor(props) {
                     {adat.tipus === "selectQuery" ? (
                       <AdminInputSelectQuery
                         name={key}
-                        objektum={ertek}
-                        url={adat.url}
+                        objektum={ertek} 
                         kapcsoltAdat={adat.kapcsoltAdat}
-                        readOnly={true} // Csak olvasható
+                        objLista={adat.objLista} 
+                        readOnly={true} 
                       />
-                    ): adat.tipus === "select" ? (
+                    ) : adat.tipus === "select" ? (
                       <AdminInputSelect
                         name={key}
                         objektum={ertek}
                         lista={adat.lista}
-                        readOnly={true} // Csak olvasható
+                        readOnly={true} 
                       />
-                    
-                    ): (
+                    ) : (
                       <span>{ertek ?? ""}</span>
                     )}
                   </>
@@ -155,18 +147,13 @@ export default function TablaSor(props) {
         }
         return null;
       })}
-
       <td>
         {sorModosithato ? (
           <Button className="btn-sm" variant="outline-success" onClick={mentes}>
             Mentés
           </Button>
         ) : (
-          <Button
-            className="btn-sm"
-            variant="outline-success"
-            onClick={modosithatova_allitas}
-          >
+          <Button className="btn-sm" variant="outline-success" onClick={modosithatova_allitas}>
             Módosítás
           </Button>
         )}
@@ -178,7 +165,7 @@ export default function TablaSor(props) {
           </Button>
         </td>
       )}
-
     </tr>
   );
-}  
+}
+

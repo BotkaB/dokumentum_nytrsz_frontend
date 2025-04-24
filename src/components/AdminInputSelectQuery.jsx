@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import useAdatContext from "../contexts/AdatContext";
 
-// Funkció a beágyazott objektumok értékeinek lekérésére
+// Beágyazott érték lekérő segédfüggvény
 const getNestedValue = (obj, path) => {
   return path.reduce((acc, key) => (acc && acc[key] !== undefined) ? acc[key] : null, obj);
 };
@@ -11,58 +11,41 @@ export default function AdminInputSelectQuery({
   esemeny,
   name,
   objektum,
-  readOnly
+  readOnly,
+  objLista, 
 }) {
   const [options, setOptions] = useState([]);
   const [selectedValue, setSelectedValue] = useState(objektum ?? "");
-  const { objLista } = useAdatContext();
-
-  console.log("Kapcsolt Adat:", kapcsoltAdat);  // Naplózzuk a kapcsoltAdat tartalmát
-  console.log("ObjLista:", objLista);          // Naplózzuk a objLista tartalmát
-
-
+  console.log(kapcsoltAdat);
   useEffect(() => {
+    // Ha nincs kapcsolt adat, akkor kilépünk
+    if (!kapcsoltAdat || !kapcsoltAdat.length || !objLista) {
+      return;
+    }
 
-    if (!objLista || objLista.length === 0 || !kapcsoltAdat || kapcsoltAdat.length === 0) return;
-
-    // Módosított adatlekérdezés a szűrt lista alapján
+    // Dinamikus lista feltöltése a kapott objLista alapján
     const mappedOptions = objLista.map((item) => {
       const option = {};
+      const ertekMezoValue = getNestedValue(item, kapcsoltAdat[0].ertekMezo.split('.'));
+      const szovegMezoValue = getNestedValue(item, kapcsoltAdat[0].szovegMezo.split('.'));
 
-      // Ellenőrizzük, hogy az adat tömb vagy objektum
-      const data = Array.isArray(item) ? item : (item.data || item);
-      console.log("Adat:", data);
-      // Töltse fel az opciókat a dinamikus mezők alapján
-      if (kapcsoltAdat[0]?.ertekMezo && kapcsoltAdat[0]?.szovegMezo) {
+      option.value = ertekMezoValue;
+      option.label = szovegMezoValue;
 
-        console.log(kapcsoltAdat[0]?.ertekMezo);
-        console.log(kapcsoltAdat[0]?.szovegMezo);
-        // Használja a getNestedValue függvényt a beágyazott adatmezők elérésére
-        const ertekMezoValue = getNestedValue(data, [kapcsoltAdat[0].ertekMezo]);
-        const szovegMezoValue = Array.isArray(kapcsoltAdat[0].szovegMezo)
-          ? getNestedValue(data, kapcsoltAdat[0].szovegMezo)
-          : data[kapcsoltAdat[0].szovegMezo];
-
-
-        console.log("Érték Mező:", ertekMezoValue);
-
-
-        option.value = ertekMezoValue;
-        option.label = szovegMezoValue;
-      }
-
+      console.log(ertekMezoValue);
+      console.log(szovegMezoValue);
       return option;
     });
 
-
+    // Egyedi opciók biztosítása
     const uniqueOptions = mappedOptions.filter(
       (option, index, self) =>
         option.value != null &&
-        index === self.findIndex((o) => o.value != null && o.value === option.value)
+        index === self.findIndex((o) => o.value === option.value)
     );
 
     setOptions(uniqueOptions);
-  }, [objLista, kapcsoltAdat]);
+  }, [kapcsoltAdat, objLista]);
 
   useEffect(() => {
     setSelectedValue(objektum ?? "");

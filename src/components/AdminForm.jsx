@@ -27,6 +27,14 @@ export default function AdminForm(props) {
   const [objektum, setObjektum] = useState(props.alapObj || {});  // Ha alapObj nincs, akkor üres objektum
   const [errors, setErrors] = useState({}); // Hibák állapota
 
+  useEffect(() => {
+    if (objLista.length > 0 && !objektum.id) {
+      // Csak akkor állítjuk be az objektumot, ha még nincs ID-je (új elem)
+      setObjektum(objLista[0]); // Beállítjuk az első elem értékeit
+    }
+  }, [objLista]);
+
+
   // A mezők változásainak figyelése
   function ertek_modositas(event) {
     setObjektum({ ...objektum, [event.target.name]: event.target.value });
@@ -171,6 +179,7 @@ export default function AdminForm(props) {
                             esemeny={ertek_modositas}
                             {...(props.adatok[key].tipus === "selectQuery" && {
                               kapcsoltAdat: props.adatok[key].kapcsoltAdat,
+                              objLista: props.adatok[key].objLista,
                             })}
                             readOnly={false}
                           />

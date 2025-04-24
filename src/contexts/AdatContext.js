@@ -42,7 +42,12 @@ export const AdatProvider = ({ children }) => {
     }
   };
 
-
+  useEffect(() => {
+    if (tabla) {
+      adatlekeres();
+    }
+  }, [tabla]);
+  
   const valtoztatasTabla = (tablaValaszto) => {
     const t = lista[tablaValaszto];
     if (t) {

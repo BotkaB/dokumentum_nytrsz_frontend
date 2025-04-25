@@ -7,7 +7,7 @@ import AdminInputDate from "./AdminInputDate";
 import AdminInputSelect from "./AdminInputSelect";
 import AdminInputEmail from "./AdminInputEmail";
 import AdminInputDateTime from "./AdminInputDateTime";
-import AdminInputSelectQuery from "./AdminInputSelectQuery";
+import AdminInputSelectQuery from "./AdminInputSelectQueryNull";
 import AdminInputPassword from "./AdminInputPassword";
 import FormError from "./FormError";
 import { notify } from './NotificationService';
@@ -27,18 +27,16 @@ export default function AdminForm(props) {
   const [objektum, setObjektum] = useState(props.alapObj || {});  // Ha alapObj nincs, akkor üres objektum
   const [errors, setErrors] = useState({}); // Hibák állapota
 
-  useEffect(() => {
-    if (objLista.length > 0 && !objektum.id) {
-      // Csak akkor állítjuk be az objektumot, ha még nincs ID-je (új elem)
-      setObjektum(objLista[0]); // Beállítjuk az első elem értékeit
-    }
-  }, [objLista]);
+
 
 
   // A mezők változásainak figyelése
   function ertek_modositas(event) {
-    setObjektum({ ...objektum, [event.target.name]: event.target.value });
+    const updatedObj = { ...objektum, [event.target.name]: event.target.value };
+    setObjektum(updatedObj);
+    console.log("Frissített objektum:", updatedObj); // Logoljuk a frissített objektumot
   }
+  
 
   useEffect(() => {
     setObjektum(props.alapObj); // Frissíti az objektumot az alapObj változásakor
@@ -47,6 +45,7 @@ export default function AdminForm(props) {
   // Form elküldése
   function elkuld(event) {
     event.preventDefault();
+    console.log(objektum);
     axiosPost();
   }
 
@@ -56,6 +55,7 @@ export default function AdminForm(props) {
 
     try {
       const response = await myAxios.post(props.apik.storeUrl, {
+     
         ...objektum,
         _token: await csrf(), // A CSRF token
       });
@@ -180,6 +180,7 @@ export default function AdminForm(props) {
                             {...(props.adatok[key].tipus === "selectQuery" && {
                               kapcsoltAdat: props.adatok[key].kapcsoltAdat,
                               objLista: props.adatok[key].objLista,
+                              kapcsolatUrl: props.adatok[key].kapcsolatUrl,
                             })}
                             readOnly={false}
                           />

@@ -7,7 +7,7 @@ import AdminInputDate from "./AdminInputDate";
 import AdminInputEmail from "./AdminInputEmail";
 import AdminInputDateTime from "./AdminInputDateTime";
 import AdminInputSelect from "./AdminInputSelect";
-import AdminInputSelectQuery from "./AdminInputSelectQuery";
+import AdminInputSelectQuery from "./AdminInputSelectQueryNull";
 import AdminInputPassword from "./AdminInputPassword";
 import useAdatContext from "../contexts/AdatContext";
 import FormError from "./FormError";
@@ -95,6 +95,7 @@ export default function TablaSor(props) {
     <tr style={{ display: lathatosag }}>
       {Object.keys(objektum).map((key) => {
         const adat = props.adatok[key];
+
         if (adat && adat.lathato) {
           const InputComponent = inputComponentMap[adat.tipus];
           const ertek = objektum[key];
@@ -112,8 +113,7 @@ export default function TablaSor(props) {
                         {...(adat.tipus === "select" && { lista: adat.lista })}
                         {...(adat.tipus === "selectQuery" && {
                           kapcsoltAdat: adat.kapcsoltAdat,
-                          esemeny: ertek_modositas,
-                          objLista: adat.objLista,
+                          esemeny: ertek_modositas,                        
                         })}
                       />
                     )}
@@ -126,7 +126,6 @@ export default function TablaSor(props) {
                         name={key}
                         objektum={ertek} 
                         kapcsoltAdat={adat.kapcsoltAdat}
-                        objLista={adat.objLista} 
                         readOnly={true} 
                       />
                     ) : adat.tipus === "select" ? (

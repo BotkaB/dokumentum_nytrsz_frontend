@@ -58,8 +58,21 @@ export const AdatProvider = ({ children }) => {
     }
   };
 
+  // Egyedi lekérés tetszőleges URL-ről, nem változtatja meg a globális `tabla`-t
+const adatlekeresEgyediUrl = async (url) => {
+  try {
+    const { data } = await myAxios.get(url);
+    const tomb = Array.isArray(data) ? data : (data.data || data); 
+    return tomb;
+  } catch (error) {
+    console.error("Kapcsolt adat lekérés hiba:", error);
+    return [];
+  }
+};
+
+
   return (
-    <AdatContext.Provider value={{ objLista, loading, adatlekeres, tabla, valtoztatasTabla}}>
+    <AdatContext.Provider value={{ objLista, loading, adatlekeres, tabla, valtoztatasTabla,    adatlekeresEgyediUrl,}}>
       {children}
     </AdatContext.Provider>
   );

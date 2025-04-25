@@ -237,22 +237,17 @@ const lista = [
           modosithato: false,
           kotelezo: true,
           fejlec: "azon",
-          lathato: true,
+          lathato: false,
         },
 
-        ugyfel_fotipus_id: {
-          tipus: "number",
-          modosithato: false,
-          kotelezo: true,
-          fejlec: "foazon",
-          lathato: true,
-        },
+
         ugyfel_fotipus: {
           tipus: "selectQuery",
           kapcsoltAdat: [
             {
               ertekMezo: "ugyfel_tipus_id",
-              szovegMezo: "elnevezes" 
+              szovegMezo: "elnevezes", 
+              fotipusMezo:"ugyfel_fotipus_id"
             },
           ],
 
@@ -290,7 +285,6 @@ const lista = [
       },
       alapObj: {
         ugyfel_tipus_id: "",
-        ugyfel_fotipus_id: "",
         ugyfel_fotipus: "",
         elnevezes: "",
 
@@ -317,19 +311,13 @@ const lista = [
           lathato: false,
         },
 
-        intezet_id: {
-          tipus: "number",
-          modosithato: false,
-          kotelezo: true,
-          fejlec: "foazon",
-          lathato: false,
-        },
         intezet: {
           tipus: "selectQuery",
           kapcsoltAdat: [
             {
-              ertekMezo: "intezet",
-              szovegMezo: "intezet",
+              ertekMezo: "megvalositasi_helyszin_id",
+              szovegMezo: "nev",
+              fotipusMezo:"intezet_id"
             },
           ],
           modosithato: true,
@@ -389,7 +377,6 @@ const lista = [
       },
       alapObj: {
         megvalositasi_helyszin_id: "",
-        intezet_id: "",
         intezet: "",
         nev: "",
         agglomeracio: "",
@@ -472,21 +459,23 @@ const lista = [
           lathato: false,
         },
 
+        
+
         elszamolas_tipus_id: {
           tipus: "selectQuery",
           kapcsoltAdat: [
             {
               ertekMezo: "elszamolas_tipus_id",  
-              szovegMezo: ["elszamolas_tipus","elszamolas_elnevezese"] 
+              szovegMezo: "elszamolas_elnevezese",
             },
           ],
+          kapcsolatUrl:"api/elszamolas_tipuses",
           modosithato: true,
           kotelezo: true,
           fejlec: "elszámolás típus",
           lathato: true,
         },
         
-
         dokumentum_neve: {
           tipus: "text",
           modosithato: true,
@@ -494,6 +483,7 @@ const lista = [
           fejlec: "dokumentum neve",
           lathato: true,
         },
+     
 
         created_at: {
           tipus: "text",
@@ -517,7 +507,6 @@ const lista = [
         dokumentum_tipus_id: "",
         elszamolas_tipus_id:"",
         dokumentum_neve: "",
-
       },
 
     },
@@ -546,9 +535,10 @@ const lista = [
           kapcsoltAdat: [
             {
               ertekMezo: "ugyfel_tipus_id",
-              szovegMezo: ["ugyfel_tipus","elnevezes"]
+              szovegMezo: "elnevezes"
             },
           ],
+          kapcsolatUrl:"api/ugyfel_tipuses",
           modosithato: true,
           kotelezo: true,
           fejlec: "ügyféltípus",
@@ -560,9 +550,10 @@ const lista = [
           kapcsoltAdat: [
             {
               ertekMezo: "dokumentum_tipus_id",
-              szovegMezo: ["dokumentum_tipus", "dokumentum_neve"]
+              szovegMezo: "dokumentum_neve"
             },
           ],
+          kapcsolatUrl:"api/dokumentum_tipuses",
           modosithato: true,
           kotelezo: true,
           fejlec: "dokumentum típus",
@@ -588,6 +579,7 @@ const lista = [
         },
       },
       alapObj: {
+        id:"",
         ugyfel_tipus_id: "",
         dokumentum_tipus_id: "",
       },

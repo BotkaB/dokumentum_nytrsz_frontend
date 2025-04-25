@@ -7,10 +7,11 @@ const AdatContext = createContext();
 
 // AdatProvider komponens, amely biztosítja az adatokat a gyermek komponensek számára
 export const AdatProvider = ({ children }) => {
+  
   const [objLista, setObjLista] = useState([]);
   const [loading, setLoading] = useState(true);
   const [tabla, setTabla] = useState(lista.dokumentum_tipuses);
- 
+ console.log("AdatProvider init", objLista);
 
   const adatlekeres = async () => {
     setLoading(true);

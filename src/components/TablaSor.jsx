@@ -102,7 +102,7 @@ export default function TablaSor(props) {
 
           return (
             <Fragment key={key}>
-              <td>
+              <td className={key}>
                 {sorModosithato && adat.modosithato ? (
                   <>
                     {InputComponent && (

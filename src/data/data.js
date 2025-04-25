@@ -459,7 +459,14 @@ const lista = [
           lathato: false,
         },
 
-        
+         
+        dokumentum_neve: {
+          tipus: "text",
+          modosithato: true,
+          kotelezo: true,
+          fejlec: "dokumentum neve",
+          lathato: true,
+        }, 
 
         elszamolas_tipus_id: {
           tipus: "selectQuery",
@@ -475,14 +482,8 @@ const lista = [
           fejlec: "elszámolás típus",
           lathato: true,
         },
-        
-        dokumentum_neve: {
-          tipus: "text",
-          modosithato: true,
-          kotelezo: true,
-          fejlec: "dokumentum neve",
-          lathato: true,
-        },
+
+      
      
 
         created_at: {

@@ -7,7 +7,7 @@ import AdminInputDate from "./AdminInputDate";
 import AdminInputSelect from "./AdminInputSelect";
 import AdminInputEmail from "./AdminInputEmail";
 import AdminInputDateTime from "./AdminInputDateTime";
-import AdminInputSelectQuery from "./AdminInputSelectQueryNull";
+import AdminInputSelectQuery from "./AdminInputSelectQuery";
 import AdminInputPassword from "./AdminInputPassword";
 import FormError from "./FormError";
 import { notify } from './NotificationService';
@@ -179,7 +179,7 @@ export default function AdminForm(props) {
                             esemeny={ertek_modositas}
                             {...(props.adatok[key].tipus === "selectQuery" && {
                               kapcsoltAdat: props.adatok[key].kapcsoltAdat,
-                              objLista: props.adatok[key].objLista,
+                             // objLista: objLista,
                               kapcsolatUrl: props.adatok[key].kapcsolatUrl,
                             })}
                             readOnly={false}

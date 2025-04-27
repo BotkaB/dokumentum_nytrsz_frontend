@@ -402,7 +402,7 @@ const lista = [
           modosithato: false,
           kotelezo: true,
           fejlec: "azon",
-          lathato: true,
+          lathato: false,
         },
 
         elszamolas_elnevezese: {
@@ -536,7 +536,8 @@ const lista = [
           kapcsoltAdat: [
             {
               ertekMezo: "ugyfel_tipus_id",
-              szovegMezo: "elnevezes"
+              szovegMezo: "elnevezes",
+              fotipusMezo:"ugyfel_fotipus_id"
             },
           ],
           kapcsolatUrl:"api/ugyfel_tipuses",

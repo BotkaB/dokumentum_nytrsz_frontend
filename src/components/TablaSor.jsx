@@ -7,7 +7,7 @@ import AdminInputDate from "./AdminInputDate";
 import AdminInputEmail from "./AdminInputEmail";
 import AdminInputDateTime from "./AdminInputDateTime";
 import AdminInputSelect from "./AdminInputSelect";
-import AdminInputSelectQuery from "./AdminInputSelectQueryNull";
+import AdminInputSelectQuery from "./AdminInputSelectQuery";
 import AdminInputPassword from "./AdminInputPassword";
 import useAdatContext from "../contexts/AdatContext";
 import FormError from "./FormError";
@@ -26,6 +26,7 @@ const inputComponentMap = {
 };
 
 export default function TablaSor(props) {
+
   const [sorModosithato, setSorModosithato] = useState(false);
   const [objektum, setObjektum] = useState(props.obj);
   const [regiObjektum, setRegiObjektum] = useState(props.obj);
@@ -113,7 +114,8 @@ export default function TablaSor(props) {
                         {...(adat.tipus === "select" && { lista: adat.lista })}
                         {...(adat.tipus === "selectQuery" && {
                           kapcsoltAdat: adat.kapcsoltAdat,
-                          esemeny: ertek_modositas,                        
+                          esemeny: ertek_modositas,  
+                          kapcsolatUrl:adat.kapcsolatUrl                   
                         })}
                       />
                     )}
@@ -126,6 +128,7 @@ export default function TablaSor(props) {
                         name={key}
                         objektum={ertek} 
                         kapcsoltAdat={adat.kapcsoltAdat}
+                        kapcsolatUrl={adat.kapcsolatUrl}
                         readOnly={true} 
                       />
                     ) : adat.tipus === "select" ? (

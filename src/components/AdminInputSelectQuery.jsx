@@ -107,7 +107,7 @@ export default function AdminInputSelectQuery({
       cache.clear();
     }
     loadOptions();
-  }, [objLista, kapcsolatUrl]);
+  }, [name, objLista, kapcsolatUrl]);
   
 
   useEffect(() => {

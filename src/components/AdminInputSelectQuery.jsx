@@ -11,8 +11,7 @@ export default function AdminInputSelectQuery({
   objektum,
   readOnly,
   kapcsolatUrl,
-}) 
-{
+}) {
   const [options, setOptions] = useState([]);
   const [selectedValue, setSelectedValue] = useState("");
   const [loading, setLoading] = useState(false);
@@ -24,8 +23,6 @@ export default function AdminInputSelectQuery({
     return kapcsoltAdat[0];
   }, [kapcsoltAdat]);
 
-
-
   const loadOptions = async () => {
     if (!memoKapcsoltAdat) return;
     setLoading(true);
@@ -34,12 +31,15 @@ export default function AdminInputSelectQuery({
     try {
       let filteredOptions = [];
       console.log('kapcsolatUrl:', kapcsolatUrl);
-      // Ha létezik cache és a kapcsolatUrl megegyezik, akkor ne kérjünk új adatokat
+
+      // Ha a kapcsolatUrl változik, töröljük a cache-t
       if (kapcsolatUrl && cache.has(kapcsolatUrl)) {
         console.log("Adatok a cache-ből:");
         filteredOptions = cache.get(kapcsolatUrl);
       } else {
         console.log("Lekérdezés a szerverről...");
+        
+        // Friss adatlekérés a backendtől
         if (kapcsolatUrl) {
           const kapcsoltAdatok = await adatlekeresEgyediUrl(kapcsolatUrl);
           filteredOptions = kapcsoltAdatok
@@ -51,20 +51,21 @@ export default function AdminInputSelectQuery({
               value: String(item[memoKapcsoltAdat.ertekMezo]),
               label: item[memoKapcsoltAdat.szovegMezo],
             }));
+          
           // Csak akkor frissítjük a cache-t, ha új adatokat kérünk
           cache.set(kapcsolatUrl, filteredOptions);
         } else {
-
           filteredOptions = objLista
-
             .filter((item) => {
               if (memoKapcsoltAdat.fotipusMezo) {
                 console.log("Szűrés", item, "mező:", memoKapcsoltAdat.fotipusMezo, "érték:", item[memoKapcsoltAdat.fotipusMezo]);
                 return item[memoKapcsoltAdat.fotipusMezo] === null; // Szűrés fotipusMezo alapján
               }
               return true; // Ha nincs fotipusMezo, minden adatot felhasználunk
-            })
+            });
+
           console.log('Filtered options:', filteredOptions);
+
           filteredOptions = filteredOptions.map((item) => ({
             value: String(item[memoKapcsoltAdat.ertekMezo]),
             label: item[memoKapcsoltAdat.szovegMezo],
@@ -73,7 +74,7 @@ export default function AdminInputSelectQuery({
         console.log("Megszűrt lista:", filteredOptions);
       }
 
-    
+      // Duplikált értékek kiszűrése
       const uniqueOptions = [...new Map(filteredOptions.map((item) => [item.value, item])).values()];
 
       const objektumStr = String(objektum ?? "");
@@ -84,6 +85,7 @@ export default function AdminInputSelectQuery({
         });
       }
 
+      // Extra opciók hozzáadása, ha az objektum tömb
       if (objektum && Array.isArray(objektum)) {
         const extraOptions = objektum.map((item) => ({
           value: String(item[memoKapcsoltAdat.ertekMezo]),
@@ -102,14 +104,15 @@ export default function AdminInputSelectQuery({
     }
   };
 
+  // Újra betöltjük az adatokat, ha változik a kapcsolatUrl vagy objLista
   useEffect(() => {
     if (kapcsolatUrl && !cache.has(kapcsolatUrl)) {
       cache.clear();
     }
     loadOptions();
   }, [name, objLista, kapcsolatUrl]);
-  
 
+  // Objektum beállítása a kiválasztott értékhez
   useEffect(() => {
     setSelectedValue(String(objektum ?? ""));
   }, [objektum]);
@@ -118,8 +121,6 @@ export default function AdminInputSelectQuery({
     setSelectedValue(event.target.value);
     esemeny(event);
   };
-
-  
 
   return (
     <div>
